@@ -291,6 +291,30 @@
                     @enderror
                 </div>
 
+                <!-- NIP -->
+                <div class="form-group">
+                    <label for="nip" class="form-label">
+                        <i class="fas fa-id-card me-2"></i>NIP (Nomor Induk Pegawai)
+                    </label>
+                    <div class="input-icon">
+                        <i class="fas fa-id-card"></i>
+                        <input id="nip"
+                               type="text"
+                               name="nip"
+                               class="form-control @error('nip') is-invalid @enderror"
+                               value="{{ old('nip') }}"
+                               required
+                               autocomplete="username"
+                               pattern="[0-9]{18}"
+                               maxlength="18"
+                               placeholder="Masukkan NIP 18 digit Anda">
+                    </div>
+                    <small class="text-muted">NIP harus 18 digit angka</small>
+                    @error('nip')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+
                 <!-- Email Address -->
                 <div class="form-group">
                     <label for="email" class="form-label">
@@ -459,6 +483,29 @@
             input.addEventListener('blur', function() {
                 this.parentElement.classList.remove('focused');
             });
+        });
+
+        // NIP formatting and validation
+        const nipInput = document.getElementById('nip');
+        nipInput.addEventListener('input', function() {
+            // Remove non-numeric characters
+            this.value = this.value.replace(/\D/g, '');
+            
+            // Limit to 18 digits
+            if (this.value.length > 18) {
+                this.value = this.value.substr(0, 18);
+            }
+            
+            // Visual feedback for valid NIP length
+            if (this.value.length === 18) {
+                this.classList.remove('is-invalid');
+                this.classList.add('is-valid');
+            } else {
+                this.classList.remove('is-valid');
+                if (this.value.length > 0) {
+                    this.classList.add('is-invalid');
+                }
+            }
         });
     </script>
 </body>

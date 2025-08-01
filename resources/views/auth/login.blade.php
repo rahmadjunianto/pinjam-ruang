@@ -195,6 +195,14 @@
             border-color: #f44336;
         }
 
+        .form-control.is-valid {
+            border-color: #4caf50;
+            background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'><path fill='%234caf50' d='M6.564.75l-3.59 3.612-1.538-1.55L0 4.26l2.974 2.99L8 2.193z'/></svg>");
+            background-repeat: no-repeat;
+            background-position: right 10px center;
+            background-size: 16px;
+        }
+
         .back-home {
             position: absolute;
             top: 20px;
@@ -291,24 +299,26 @@
             <form method="POST" action="{{ route('login') }}">
                 @csrf
 
-                <!-- Email Address -->
+                <!-- NIP -->
                 <div class="form-group">
-                    <label for="email" class="form-label">
-                        <i class="fas fa-envelope me-2"></i>Alamat Email
+                    <label for="nip" class="form-label">
+                        <i class="fas fa-id-card me-2"></i>NIP (Nomor Induk Pegawai)
                     </label>
                     <div class="input-icon">
-                        <i class="fas fa-envelope"></i>
-                        <input id="email"
-                               type="email"
-                               name="email"
-                               class="form-control @error('email') is-invalid @enderror"
-                               value="{{ old('email') }}"
+                        <i class="fas fa-id-card"></i>
+                        <input id="nip"
+                               type="text"
+                               name="nip"
+                               class="form-control @error('nip') is-invalid @enderror"
+                               value="{{ old('nip') }}"
                                required
                                autofocus
                                autocomplete="username"
-                               placeholder="Masukkan alamat email Anda">
+                               pattern="[0-9]{18}"
+                               maxlength="18"
+                               placeholder="Masukkan NIP 18 digit Anda">
                     </div>
-                    @error('email')
+                    @error('nip')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
@@ -411,6 +421,29 @@
             const button = this.querySelector('.btn-login');
             button.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Sedang masuk...';
             button.disabled = true;
+        });
+
+        // NIP formatting and validation
+        const nipInput = document.getElementById('nip');
+        nipInput.addEventListener('input', function() {
+            // Remove non-numeric characters
+            this.value = this.value.replace(/\D/g, '');
+            
+            // Limit to 18 digits
+            if (this.value.length > 18) {
+                this.value = this.value.substr(0, 18);
+            }
+            
+            // Visual feedback for valid NIP length
+            if (this.value.length === 18) {
+                this.classList.remove('is-invalid');
+                this.classList.add('is-valid');
+            } else {
+                this.classList.remove('is-valid');
+                if (this.value.length > 0) {
+                    this.classList.add('is-invalid');
+                }
+            }
         });
     </script>
 </body>
