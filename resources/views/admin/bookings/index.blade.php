@@ -2,6 +2,11 @@
 
 @section('title', 'Kelola Booking')
 
+@section('css')
+<!-- SweetAlert2 CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+@endsection
+
 @section('content_header')
     <div class="row">
         <div class="col-sm-6">
@@ -22,33 +27,55 @@
 @section('content')
     <!-- Statistics Cards -->
     <div class="row mb-3">
+        @if(auth()->user()->role !== 'viewer')
         <div class="col-lg-3 col-6">
             <div class="small-box bg-warning">
                 <div class="inner">
                     <h3>{{ $pendingCount }}</h3>
-                    <p>Pending Approval</p>
+                    <p>
+                        @if(auth()->user()->role === 'user')
+                            Booking Saya (Pending)
+                        @else
+                            Pending Approval
+                        @endif
+                    </p>
                 </div>
                 <div class="icon">
                     <i class="fas fa-clock"></i>
                 </div>
             </div>
         </div>
+        @endif
+        
         <div class="col-lg-3 col-6">
             <div class="small-box bg-success">
                 <div class="inner">
                     <h3>{{ $approvedCount }}</h3>
-                    <p>Approved</p>
+                    <p>
+                        @if(auth()->user()->role === 'user')
+                            Booking Saya (Approved)
+                        @else
+                            Approved
+                        @endif
+                    </p>
                 </div>
                 <div class="icon">
                     <i class="fas fa-check-circle"></i>
                 </div>
             </div>
         </div>
-        <div class="col-lg-3 col-6">
+        
+                <div class="col-lg-3 col-6">
             <div class="small-box bg-info">
                 <div class="inner">
                     <h3>{{ $todayCount }}</h3>
-                    <p>Booking Hari Ini</p>
+                    <p>
+                        @if(auth()->user()->role === 'user')
+                            Booking Saya Hari Ini
+                        @else
+                            Booking Hari Ini
+                        @endif
+                    </p>
                 </div>
                 <div class="icon">
                     <i class="fas fa-calendar-day"></i>
@@ -59,10 +86,18 @@
             <div class="small-box bg-primary">
                 <div class="inner">
                     <h3>{{ $totalCount }}</h3>
-                    <p>Total Booking</p>
+                    <p>
+                        @if(auth()->user()->role === 'user')
+                            Total Booking Saya
+                        @elseif(auth()->user()->role === 'viewer')
+                            Total Booking (Approved)
+                        @else
+                            Total Booking
+                        @endif
+                    </p>
                 </div>
                 <div class="icon">
-                    <i class="fas fa-calendar-alt"></i>
+                    <i class="fas fa-calendar-check"></i>
                 </div>
             </div>
         </div>
@@ -76,10 +111,17 @@
                 Daftar Booking
             </h3>
             <div class="card-tools">
-                <a href="{{ route('admin.bookings.create') }}" class="btn btn-success btn-sm">
-                    <i class="fas fa-plus mr-1"></i>
-                    Booking Baru
-                </a>
+                @if(auth()->user()->role === 'admin')
+                    <a href="{{ route('admin.bookings.create') }}" class="btn btn-success btn-sm">
+                        <i class="fas fa-plus mr-1"></i>
+                        Booking Baru
+                    </a>
+                @elseif(auth()->user()->role === 'user')
+                    <a href="{{ route('admin.bookings.available-rooms') }}" class="btn btn-primary btn-sm">
+                        <i class="fas fa-search mr-1"></i>
+                        Pilih Ruangan
+                    </a>
+                @endif
             </div>
         </div>
 
@@ -303,7 +345,7 @@
                                                 Detail
                                             </a>
 
-                                            @if($booking->status === 'pending')
+                                            @if(auth()->user()->role === 'admin' && $booking->status === 'pending')
                                                 <div class="btn-group btn-group-sm" role="group">
                                                     <button type="button"
                                                             class="btn btn-success btn-sm"
@@ -323,6 +365,14 @@
                                                         <i class="fas fa-edit"></i>
                                                     </a>
                                                 </div>
+                                            @elseif(auth()->user()->role === 'user' && $booking->user_id === auth()->id() && $booking->status === 'pending')
+                                                <!-- User can only edit their own pending bookings -->
+                                                <a href="{{ route('admin.bookings.edit', $booking) }}"
+                                                   class="btn btn-warning btn-sm"
+                                                   title="Edit">
+                                                    <i class="fas fa-edit mr-1"></i>
+                                                    Edit
+                                                </a>
                                             @endif
                                         </div>
                                     </td>
@@ -342,10 +392,17 @@
                             Belum ada booking yang dibuat.
                         @endif
                     </p>
-                    <a href="{{ route('admin.bookings.create') }}" class="btn btn-success">
-                        <i class="fas fa-plus mr-1"></i>
-                        Buat Booking Baru
-                    </a>
+                    @if(auth()->user()->role === 'admin')
+                        <a href="{{ route('admin.bookings.create') }}" class="btn btn-success">
+                            <i class="fas fa-plus mr-1"></i>
+                            Buat Booking Baru
+                        </a>
+                    @elseif(auth()->user()->role === 'user')
+                        <a href="{{ route('admin.bookings.available-rooms') }}" class="btn btn-primary">
+                            <i class="fas fa-search mr-1"></i>
+                            Pilih Ruangan untuk Booking
+                        </a>
+                    @endif
                 </div>
             @endif
         </div>
@@ -386,6 +443,9 @@
 @stop
 
 @section('js')
+<!-- SweetAlert2 JS -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <script>
 $(document).ready(function() {
     // Auto submit filter on change

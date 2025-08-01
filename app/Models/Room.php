@@ -14,11 +14,13 @@ class Room extends Model
         'name',
         'code',
         'description',
+        'room_category_id',
         'capacity',
         'location',
         'floor',
         'facilities',
         'image',
+        'status',
         'price_per_hour',
         'notes',
         'is_active',
@@ -29,6 +31,14 @@ class Room extends Model
         'price_per_hour' => 'decimal:2',
         'is_active' => 'boolean',
     ];
+
+    /**
+     * Get the room category that owns the room.
+     */
+    public function roomCategory()
+    {
+        return $this->belongsTo(RoomCategory::class);
+    }
 
     /**
      * Get the bookings for the room.

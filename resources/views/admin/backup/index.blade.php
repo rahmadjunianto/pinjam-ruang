@@ -2,6 +2,11 @@
 
 @section('title', 'Backup Data')
 
+@section('css')
+<!-- SweetAlert2 CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+@endsection
+
 @section('content_header')
     <div class="d-flex justify-content-between align-items-center">
         <h1><i class="fas fa-download mr-2"></i>Backup Data</h1>
@@ -100,10 +105,10 @@
                                     <td>{{ $backup['size'] }}</td>
                                     <td>
                                         <i class="fas fa-calendar mr-1"></i>
-                                        {{ \Carbon\Carbon::createFromTimestamp($backup['date'])->format('d/m/Y H:i:s') }}
+                                        {{ $backup['date'] }}
                                         <br>
                                         <small class="text-muted">
-                                            ({{ \Carbon\Carbon::createFromTimestamp($backup['date'])->diffForHumans() }})
+                                            ({{ \Carbon\Carbon::createFromTimestamp($backup['timestamp'])->diffForHumans() }})
                                         </small>
                                     </td>
                                     <td>
@@ -246,6 +251,9 @@
 </div>
 
 @section('js')
+<!-- SweetAlert2 JS -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <script>
 function createBackup() {
     const type = document.getElementById('backupType').value;
@@ -270,6 +278,7 @@ function createBackup() {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
+            'Accept': 'application/json',
             'X-CSRF-TOKEN': '{{ csrf_token() }}'
         },
         body: JSON.stringify({
@@ -296,9 +305,12 @@ function createBackup() {
 function deleteBackup(fileName) {
     $('#deleteBackupModal').modal('show');
     document.getElementById('confirmDeleteBtn').onclick = function() {
-        fetch(`{{ route('admin.backup.delete', '') }}/${fileName}`, {
+        const deleteUrl = `{{ url('admin/backup/delete') }}/${fileName}`;
+        
+        fetch(deleteUrl, {
             method: 'DELETE',
             headers: {
+                'Accept': 'application/json',
                 'X-CSRF-TOKEN': '{{ csrf_token() }}'
             }
         })

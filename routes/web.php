@@ -70,28 +70,28 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
         Route::patch('/{user}/toggle-status', [UserController::class, 'toggleStatus'])->name('toggle-status');
     });
 
-    // Room Management Routes (Admin only for create/edit/delete)
-    Route::prefix('rooms')->name('rooms.')->group(function () {
-        Route::get('/', [RoomController::class, 'index'])->name('index'); // All users can view
-        Route::get('/{room}', [RoomController::class, 'show'])->name('show'); // All users can view details
-        Route::get('/{room}/availability', [RoomController::class, 'checkAvailability'])->name('availability'); // All users
-        
-        // Admin only routes
-        Route::middleware('role:admin')->group(function () {
-            Route::get('/create', [RoomController::class, 'create'])->name('create');
-            Route::post('/', [RoomController::class, 'store'])->name('store');
-            Route::get('/{room}/edit', [RoomController::class, 'edit'])->name('edit');
-            Route::put('/{room}', [RoomController::class, 'update'])->name('update');
-            Route::delete('/{room}', [RoomController::class, 'destroy'])->name('destroy');
-        });
+    // Room Management Routes (Admin only)
+    Route::prefix('rooms')->name('rooms.')->middleware('role:admin')->group(function () {
+        Route::get('/', [RoomController::class, 'index'])->name('index'); // Admin only
+        Route::get('/create', [RoomController::class, 'create'])->name('create');
+        Route::post('/', [RoomController::class, 'store'])->name('store');
+        Route::get('/{room}', [RoomController::class, 'show'])->name('show');
+        Route::get('/{room}/edit', [RoomController::class, 'edit'])->name('edit');
+        Route::put('/{room}', [RoomController::class, 'update'])->name('update');
+        Route::delete('/{room}', [RoomController::class, 'destroy'])->name('destroy');
+        Route::get('/{room}/availability', [RoomController::class, 'checkAvailability'])->name('availability');
     });
 
     // Booking Management Routes (User can create, Admin can approve/reject)
     Route::prefix('bookings')->name('bookings.')->group(function () {
         Route::get('/', [BookingController::class, 'index'])->name('index'); // All users
+        Route::get('/available-rooms', [BookingController::class, 'getAvailableRooms'])->middleware('role:admin,user')->name('available-rooms'); // For room selection
         Route::get('/create', [BookingController::class, 'create'])->middleware('role:admin,user')->name('create'); // Admin and User only
         Route::post('/', [BookingController::class, 'store'])->middleware('role:admin,user')->name('store'); // Admin and User only
         Route::get('/{booking}', [BookingController::class, 'show'])->name('show'); // All users
+        
+        // Room availability check for booking (accessible by users)
+        Route::get('/room/{room}/availability', [BookingController::class, 'checkRoomAvailability'])->middleware('role:admin,user')->name('room-availability');
         
         // Admin only routes
         Route::middleware('role:admin')->group(function () {

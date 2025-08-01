@@ -17,7 +17,22 @@ class BookingController extends Controller
      */
     public function index()
     {
-        $bookings = Booking::with(['room', 'user', 'bidang'])
+        $user = Auth::user();
+        
+        // Base query
+        $query = Booking::with(['room', 'user', 'bidang']);
+        
+        // Filter based on user role
+        if ($user->role === 'user') {
+            // Users can only see their own bookings
+            $query->where('user_id', $user->id);
+        } elseif ($user->role === 'viewer') {
+            // Viewers can only see approved bookings
+            $query->where('status', 'approved');
+        }
+        // Admin can see all bookings (no additional filter)
+        
+        $bookings = $query
             ->when(request('search'), function ($query) {
                 $search = request('search');
                 $query->where(function ($q) use ($search) {
@@ -47,11 +62,26 @@ class BookingController extends Controller
             ->latest('start_time')
             ->paginate(15);
 
-        // Get statistics
-        $pendingCount = Booking::where('status', 'pending')->count();
-        $approvedCount = Booking::where('status', 'approved')->count();
-        $todayCount = Booking::whereDate('booking_date', today())->count();
-        $totalCount = Booking::count();
+        // Get statistics based on user role
+        if ($user->role === 'user') {
+            // Users can only see statistics for their own bookings
+            $pendingCount = Booking::where('user_id', $user->id)->where('status', 'pending')->count();
+            $approvedCount = Booking::where('user_id', $user->id)->where('status', 'approved')->count();
+            $todayCount = Booking::where('user_id', $user->id)->whereDate('booking_date', today())->count();
+            $totalCount = Booking::where('user_id', $user->id)->count();
+        } elseif ($user->role === 'viewer') {
+            // Viewers can only see statistics for approved bookings
+            $pendingCount = 0; // Viewers cannot see pending bookings
+            $approvedCount = Booking::where('status', 'approved')->count();
+            $todayCount = Booking::where('status', 'approved')->whereDate('booking_date', today())->count();
+            $totalCount = Booking::where('status', 'approved')->count();
+        } else {
+            // Admin can see all statistics
+            $pendingCount = Booking::where('status', 'pending')->count();
+            $approvedCount = Booking::where('status', 'approved')->count();
+            $todayCount = Booking::whereDate('booking_date', today())->count();
+            $totalCount = Booking::count();
+        }
 
         // Get data for filters
         $rooms = Room::orderBy('name')->get();
@@ -78,6 +108,41 @@ class BookingController extends Controller
         $selectedRoom = request('room') ? Room::find(request('room')) : null;
 
         return view('admin.bookings.create', compact('rooms', 'bidangs', 'selectedRoom'));
+    }
+
+    /**
+     * Get available rooms for booking (for non-admin users)
+     */
+    public function getAvailableRooms()
+    {
+        $rooms = Room::where('is_active', true)
+                     ->with('roomCategory')
+                     ->orderBy('name')
+                     ->get();
+
+        return view('admin.bookings.available-rooms', compact('rooms'));
+    }
+
+    /**
+     * Check room availability for booking
+     */
+    public function checkRoomAvailability(Room $room, Request $request)
+    {
+        $date = $request->get('date', today()->format('Y-m-d'));
+        
+        $existingBookings = Booking::where('room_id', $room->id)
+                                  ->where('booking_date', $date)
+                                  ->where('status', '!=', 'rejected')
+                                  ->where('status', '!=', 'cancelled')
+                                  ->orderBy('start_time')
+                                  ->get(['start_time', 'end_time', 'title', 'status']);
+        
+        return response()->json([
+            'room' => $room->only(['id', 'name', 'capacity']),
+            'date' => $date,
+            'bookings' => $existingBookings,
+            'available' => $existingBookings->isEmpty()
+        ]);
     }
 
     /**

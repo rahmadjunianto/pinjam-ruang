@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
 use ZipArchive;
 
 class BackupController extends Controller
@@ -20,6 +22,40 @@ class BackupController extends Controller
         $lastBackup = $this->getLastBackupDate();
         
         return view('admin.backup.index', compact('backups', 'lastBackup'));
+    }
+
+    /**
+     * Create backup based on type
+     */
+    public function create(Request $request)
+    {
+        // Debug: Log the request details
+        Log::info('Backup create request received', [
+            'user' => Auth::check() ? Auth::user()->email : 'Not authenticated',
+            'role' => Auth::check() ? Auth::user()->role : 'No role',
+            'type' => $request->input('type'),
+            'expects_json' => $request->expectsJson()
+        ]);
+
+        $type = $request->input('type', 'database');
+        
+        try {
+            if ($type === 'full') {
+                return $this->createFullBackup();
+            } else {
+                return $this->createDatabaseBackup();
+            }
+        } catch (\Exception $e) {
+            if (request()->expectsJson()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Error: ' . $e->getMessage()
+                ]);
+            }
+            
+            return redirect()->back()
+                           ->with('error', 'Error: ' . $e->getMessage());
+        }
     }
 
     /**
@@ -49,13 +85,34 @@ class BackupController extends Controller
             exec($command, $output, $returnCode);
 
             if ($returnCode === 0) {
+                if (request()->expectsJson()) {
+                    return response()->json([
+                        'success' => true,
+                        'message' => 'Backup database berhasil dibuat!'
+                    ]);
+                }
+                
                 return redirect()->back()
                                ->with('success', 'Backup database berhasil dibuat!');
             } else {
+                if (request()->expectsJson()) {
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'Gagal membuat backup database!'
+                    ]);
+                }
+                
                 return redirect()->back()
                                ->with('error', 'Gagal membuat backup database!');
             }
         } catch (\Exception $e) {
+            if (request()->expectsJson()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Error: ' . $e->getMessage()
+                ]);
+            }
+            
             return redirect()->back()
                            ->with('error', 'Error: ' . $e->getMessage());
         }
@@ -92,13 +149,34 @@ class BackupController extends Controller
 
                 $zip->close();
 
+                if (request()->expectsJson()) {
+                    return response()->json([
+                        'success' => true,
+                        'message' => 'Backup lengkap berhasil dibuat!'
+                    ]);
+                }
+                
                 return redirect()->back()
                                ->with('success', 'Backup lengkap berhasil dibuat!');
             } else {
+                if (request()->expectsJson()) {
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'Gagal membuat file backup!'
+                    ]);
+                }
+                
                 return redirect()->back()
                                ->with('error', 'Gagal membuat file backup!');
             }
         } catch (\Exception $e) {
+            if (request()->expectsJson()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Error: ' . $e->getMessage()
+                ]);
+            }
+            
             return redirect()->back()
                            ->with('error', 'Error: ' . $e->getMessage());
         }
@@ -129,13 +207,35 @@ class BackupController extends Controller
             
             if (file_exists($path)) {
                 unlink($path);
+                
+                if (request()->expectsJson()) {
+                    return response()->json([
+                        'success' => true,
+                        'message' => 'File backup berhasil dihapus!'
+                    ]);
+                }
+                
                 return redirect()->back()
                                ->with('success', 'File backup berhasil dihapus!');
             } else {
+                if (request()->expectsJson()) {
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'File backup tidak ditemukan!'
+                    ]);
+                }
+                
                 return redirect()->back()
                                ->with('error', 'File backup tidak ditemukan!');
             }
         } catch (\Exception $e) {
+            if (request()->expectsJson()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Error: ' . $e->getMessage()
+                ]);
+            }
+            
             return redirect()->back()
                            ->with('error', 'Error: ' . $e->getMessage());
         }
@@ -155,18 +255,20 @@ class BackupController extends Controller
             foreach ($files as $file) {
                 if ($file != '.' && $file != '..') {
                     $filePath = $backupPath . '/' . $file;
+                    $fileTime = filemtime($filePath);
                     $backups[] = [
                         'name' => $file,
                         'size' => $this->formatBytes(filesize($filePath)),
-                        'date' => date('d/m/Y H:i:s', filemtime($filePath)),
+                        'date' => date('d/m/Y H:i:s', $fileTime),
+                        'timestamp' => $fileTime, // Add timestamp for sorting
                         'type' => strpos($file, 'backup_db_') === 0 ? 'Database' : 'Full Backup'
                     ];
                 }
             }
             
-            // Sort by date descending
+            // Sort by timestamp descending (newest first)
             usort($backups, function($a, $b) {
-                return strcmp($b['name'], $a['name']);
+                return $b['timestamp'] - $a['timestamp'];
             });
         }
 
@@ -208,8 +310,8 @@ class BackupController extends Controller
             return null;
         }
         
-        $lastBackup = max(array_column($backups, 'date'));
-        return date('Y-m-d H:i:s', $lastBackup);
+        $lastBackupTimestamp = max(array_column($backups, 'timestamp'));
+        return date('Y-m-d H:i:s', $lastBackupTimestamp);
     }
 
     /**

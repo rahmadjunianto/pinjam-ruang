@@ -330,6 +330,13 @@ return [
                     'url' => 'admin/rooms',
                     'icon' => 'fas fa-home',
                     'active' => ['admin/rooms', 'admin/rooms/*'],
+                    'role' => ['admin'], // Only admin can access room management
+                ],
+                [
+                    'text' => 'Pilih Ruangan',
+                    'url' => 'admin/bookings/available-rooms',
+                    'icon' => 'fas fa-search',
+                    'role' => ['user'], // Only users can access room selection for booking
                 ],
                 [
                     'text' => 'Data Peminjaman',

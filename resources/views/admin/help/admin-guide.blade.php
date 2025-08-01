@@ -11,27 +11,81 @@
     </div>
 @endsection
 
+@section('css')
+<style>
+.guide-nav .nav-link {
+    border-radius: 0;
+    margin-bottom: 2px;
+    color: #495057;
+    position: relative;
+    z-index: 1;
+    pointer-events: auto !important;
+}
+
+.guide-nav .nav-link:hover {
+    background-color: #e9ecef;
+    color: #2e7d32;
+}
+
+.guide-nav .nav-link.active {
+    background-color: #2e7d32;
+    color: white;
+}
+
+.sticky-top {
+    position: sticky !important;
+    z-index: 100;
+}
+
+/* Ensure sidebar doesn't get blocked */
+.main-sidebar {
+    z-index: 1040 !important;
+    pointer-events: auto !important;
+}
+
+.main-sidebar * {
+    pointer-events: auto !important;
+}
+
+.content-wrapper {
+    position: relative;
+    z-index: 1;
+}
+
+/* Fix overlay issues */
+.main-sidebar .nav-link {
+    pointer-events: auto !important;
+    z-index: inherit !important;
+}
+
+.guide-nav {
+    position: relative;
+    z-index: 1;
+}
+</style>
+@endsection
+
 @section('content')
     <div class="row">
         <!-- Table of Contents -->
         <div class="col-md-3">
-            <div class="card card-success card-outline sticky-top">
+            <div class="card card-success card-outline sticky-top" style="top: 20px;">
                 <div class="card-header">
                     <h3 class="card-title">
                         <i class="fas fa-list mr-2"></i>Daftar Isi
                     </h3>
                 </div>
                 <div class="card-body p-0">
-                    <nav class="nav nav-pills flex-column">
-                        <a class="nav-link" href="#overview">Gambaran Umum</a>
-                        <a class="nav-link" href="#user-management">Manajemen User</a>
-                        <a class="nav-link" href="#room-management">Manajemen Ruangan</a>
-                        <a class="nav-link" href="#booking-approval">Persetujuan Peminjaman</a>
-                        <a class="nav-link" href="#reports">Laporan & Analytics</a>
-                        <a class="nav-link" href="#permissions">Hak Akses</a>
-                        <a class="nav-link" href="#backup">Backup & Restore</a>
-                        <a class="nav-link" href="#security">Keamanan Sistem</a>
-                        <a class="nav-link" href="#maintenance">Maintenance</a>
+                    <nav class="nav nav-pills flex-column guide-nav">
+                        <a class="nav-link guide-nav-link" href="#overview">Gambaran Umum</a>
+                        <a class="nav-link guide-nav-link" href="#user-management">Manajemen User</a>
+                        <a class="nav-link guide-nav-link" href="#room-management">Manajemen Ruangan</a>
+                        <a class="nav-link guide-nav-link" href="#booking-approval">Persetujuan Peminjaman</a>
+                        <a class="nav-link guide-nav-link" href="#reports">Laporan & Analytics</a>
+                        <a class="nav-link guide-nav-link" href="#permissions">Hak Akses</a>
+                        <a class="nav-link guide-nav-link" href="#backup">Backup & Restore</a>
+                        <a class="nav-link guide-nav-link" href="#security">Keamanan Sistem</a>
+                        <a class="nav-link guide-nav-link" href="#maintenance">Maintenance</a>
                     </nav>
                 </div>
             </div>
@@ -541,16 +595,21 @@
 <script>
 // Smooth scrolling for navigation links
 $(document).ready(function() {
-    $('.nav-link').on('click', function(e) {
+    // Handle guide navigation clicks with more specific selector
+    $('.guide-nav-link').on('click', function(e) {
         e.preventDefault();
-        const target = $(this).attr('href');
-        $('html, body').animate({
-            scrollTop: $(target).offset().top - 100
-        }, 500);
+        e.stopPropagation();
         
-        // Update active state
-        $('.nav-link').removeClass('active');
-        $(this).addClass('active');
+        const target = $(this).attr('href');
+        if ($(target).length) {
+            $('html, body').animate({
+                scrollTop: $(target).offset().top - 100
+            }, 500);
+            
+            // Update active state
+            $('.guide-nav-link').removeClass('active');
+            $(this).addClass('active');
+        }
     });
 
     // Update active state on scroll
@@ -562,10 +621,21 @@ $(document).ready(function() {
             const height = $(this).outerHeight();
             
             if (scrollTop >= offset && scrollTop < (offset + height)) {
-                $('.nav-link').removeClass('active');
-                $(`.nav-link[href="#${id}"]`).addClass('active');
+                $('.guide-nav-link').removeClass('active');
+                $(`.guide-nav-link[href="#${id}"]`).addClass('active');
             }
         });
+    });
+    
+    // Ensure sidebar functionality is preserved
+    $(document).on('click', '.main-sidebar a', function(e) {
+        // Allow sidebar links to work normally
+        e.stopPropagation();
+    });
+    
+    // Prevent event bubbling for guide navigation only
+    $('.guide-nav').on('click', function(e) {
+        e.stopPropagation();
     });
 });
 </script>
