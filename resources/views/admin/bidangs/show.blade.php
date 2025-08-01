@@ -2,7 +2,14 @@
 
 @section('title', 'Detail Bidang')
 
-@section('content_header')
+@sect                        <tr>
+                            <td><strong>Dibuat:</strong></td>
+                            <td>{{ $bidang->created_at ? $bidang->created_at->format('d/m/Y H:i') : 'N/A' }}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Diperbarui:</strong></td>
+                            <td>{{ $bidang->updated_at ? $bidang->updated_at->format('d/m/Y H:i') : 'N/A' }}</td>
+                        </tr>tent_header')
     <div class="d-flex justify-content-between align-items-center">
         <h1>Detail Bidang: {{ $bidang->nama }}</h1>
         <div class="btn-group">
@@ -144,7 +151,7 @@
                                     </a>
                                 </td>
                                 <td>{{ $booking->room->name }}</td>
-                                <td>{{ \Carbon\Carbon::parse($booking->booking_date)->format('d/m/Y') }}</td>
+                                <td>{{ $booking->booking_date ? \Carbon\Carbon::parse($booking->booking_date)->format('d/m/Y') : 'N/A' }}</td>
                                 <td>{{ $booking->start_time }} - {{ $booking->end_time }}</td>
                                 <td>
                                     @switch($booking->status)
