@@ -117,9 +117,9 @@
                         Booking Baru
                     </a>
                 @elseif(auth()->user()->role === 'user')
-                    <a href="{{ route('admin.bookings.available-rooms') }}" class="btn btn-primary btn-sm">
-                        <i class="fas fa-search mr-1"></i>
-                        Pilih Ruangan
+                        <a href="{{ route('admin.bookings.create') }}" class="btn btn-success btn-sm">
+                        <i class="fas fa-plus mr-1"></i>
+                        Booking Baru
                     </a>
                 @endif
             </div>

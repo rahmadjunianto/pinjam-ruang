@@ -113,10 +113,10 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
     Route::prefix('help')->name('help.')->group(function () {
         Route::get('/', [HelpController::class, 'index'])->name('index');
         Route::get('/user-guide', [HelpController::class, 'userGuide'])->name('user-guide');
-        Route::get('/admin-guide', [HelpController::class, 'adminGuide'])->name('admin-guide');
+        Route::get('/admin-guide', [HelpController::class, 'adminGuide'])->middleware('role:admin')->name('admin-guide');
         Route::get('/faq', [HelpController::class, 'faq'])->name('faq');
         Route::get('/contact', [HelpController::class, 'contact'])->name('contact');
-        Route::get('/system', [HelpController::class, 'system'])->name('system');
+        Route::get('/system', [HelpController::class, 'system'])->middleware('role:admin')->name('system');
     });
 });
 

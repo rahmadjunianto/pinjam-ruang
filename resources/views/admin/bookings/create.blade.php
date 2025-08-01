@@ -378,22 +378,6 @@
                 </div>
             </div>
 
-            <!-- Room Availability -->
-            <div class="card card-secondary card-outline">
-                <div class="card-header">
-                    <h3 class="card-title">
-                        <i class="fas fa-calendar-check mr-1"></i>
-                        Cek Ketersediaan
-                    </h3>
-                </div>
-                <div class="card-body">
-                    <button type="button" class="btn btn-primary btn-block" id="checkAvailability">
-                        <i class="fas fa-search mr-1"></i>
-                        Cek Ketersediaan Ruangan
-                    </button>
-                    <div id="availabilityResult" class="mt-3" style="display: none;"></div>
-                </div>
-            </div>
         </div>
     </div>
 @stop

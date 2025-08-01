@@ -333,12 +333,6 @@ return [
                     'role' => ['admin'], // Only admin can access room management
                 ],
                 [
-                    'text' => 'Pilih Ruangan',
-                    'url' => 'admin/bookings/available-rooms',
-                    'icon' => 'fas fa-search',
-                    'role' => ['user'], // Only users can access room selection for booking
-                ],
-                [
                     'text' => 'Data Peminjaman',
                     'url' => 'admin/bookings',
                     'icon' => 'fas fa-calendar-alt',
@@ -443,6 +437,7 @@ return [
                     'text' => 'Info Sistem',
                     'url' => 'admin/help/system',
                     'icon' => 'fas fa-server',
+                    'role' => ['admin'], // Only admin can access system info
                 ],
             ],
         ],
