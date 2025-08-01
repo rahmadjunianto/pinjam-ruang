@@ -346,16 +346,18 @@ return [
                     'text' => 'Laporan Peminjaman',
                     'url' => 'admin/reports/bookings',
                     'icon' => 'fas fa-chart-bar',
+                    'role' => ['admin'], // Only admin can access reports
                 ],
             ],
         ],
 
-        ['header' => 'PENGATURAN SISTEM'],
+        ['header' => 'PENGATURAN SISTEM', 'role' => ['admin']], // Only show this header for admin
 
         // Pengaturan
         [
             'text' => 'Pengaturan',
             'icon' => 'fas fa-cogs',
+            'role' => ['admin'], // Only admin can access settings
             'submenu' => [
                 [
                     'text' => 'Profil Pengguna',
@@ -366,25 +368,76 @@ return [
                     'text' => 'Manajemen User',
                     'url' => 'admin/users',
                     'icon' => 'fas fa-users-cog',
+                    'active' => ['admin/users', 'admin/users/*'],
+                    'role' => ['admin'], // Only admin
                 ],
                 [
                     'text' => 'Hak Akses',
                     'url' => 'admin/permissions',
                     'icon' => 'fas fa-key',
+                    'active' => ['admin/permissions', 'admin/permissions/*'],
+                    'role' => ['admin'], // Only admin
                 ],
                 [
                     'text' => 'Backup Data',
                     'url' => 'admin/backup',
                     'icon' => 'fas fa-download',
+                    'active' => ['admin/backup', 'admin/backup/*'],
+                    'role' => ['admin'], // Only admin
                 ],
             ],
         ],
 
+        ['header' => 'PROFIL', 'role' => ['user', 'viewer']], // Show for non-admin users
+
+        // Profile menu for non-admin users
+        [
+            'text' => 'Profil Saya',
+            'url' => 'profile',
+            'icon' => 'fas fa-user-circle',
+            'role' => ['user', 'viewer'], // Only for non-admin users
+        ],
+
+        ['header' => 'BANTUAN & DUKUNGAN'],
+
         // Bantuan
         [
-            'text' => 'Bantuan',
-            'url' => 'admin/help',
+            'text' => 'Pusat Bantuan',
             'icon' => 'fas fa-question-circle',
+            'submenu' => [
+                [
+                    'text' => 'Bantuan Umum',
+                    'url' => 'admin/help',
+                    'icon' => 'fas fa-home',
+                    'active' => ['admin/help', 'admin/help/index'],
+                ],
+                [
+                    'text' => 'Panduan Pengguna',
+                    'url' => 'admin/help/user-guide',
+                    'icon' => 'fas fa-user',
+                ],
+                [
+                    'text' => 'Panduan Admin',
+                    'url' => 'admin/help/admin-guide',
+                    'icon' => 'fas fa-user-shield',
+                    'role' => ['admin'], // Only admin needs admin guide
+                ],
+                [
+                    'text' => 'FAQ',
+                    'url' => 'admin/help/faq',
+                    'icon' => 'fas fa-comments',
+                ],
+                [
+                    'text' => 'Kontak Admin',
+                    'url' => 'admin/help/contact',
+                    'icon' => 'fas fa-phone',
+                ],
+                [
+                    'text' => 'Info Sistem',
+                    'url' => 'admin/help/system',
+                    'icon' => 'fas fa-server',
+                ],
+            ],
         ],
     ],
 
@@ -408,6 +461,7 @@ return [
         JeroenNoten\LaravelAdminLte\Menu\Filters\ClassesFilter::class,
         JeroenNoten\LaravelAdminLte\Menu\Filters\LangFilter::class,
         JeroenNoten\LaravelAdminLte\Menu\Filters\DataFilter::class,
+        App\Menu\Filters\RoleFilter::class,
     ],
 
     /*
