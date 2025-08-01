@@ -109,6 +109,12 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
     // Calendar - accessible by all authenticated users
     Route::get('calendar', [BookingController::class, 'calendar'])->name('calendar');
 
+    // Reports Routes (Admin only)
+    Route::prefix('reports')->name('reports.')->middleware('role:admin')->group(function () {
+        Route::get('/bookings', [BookingController::class, 'reports'])->name('bookings');
+        Route::get('/bookings/export', [BookingController::class, 'exportReports'])->name('bookings.export');
+    });
+
     // Help System Routes
     Route::prefix('help')->name('help.')->group(function () {
         Route::get('/', [HelpController::class, 'index'])->name('index');

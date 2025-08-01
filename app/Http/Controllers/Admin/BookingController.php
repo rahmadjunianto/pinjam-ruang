@@ -401,4 +401,209 @@ class BookingController extends Controller
 
         return view('admin.bookings.calendar', compact('rooms', 'bidangs'));
     }
+
+    /**
+     * Booking reports page
+     */
+    public function reports(Request $request)
+    {
+        $query = Booking::with(['room', 'user', 'bidang']);
+
+        // Apply filters
+        if ($request->filled('status')) {
+            $query->where('status', $request->status);
+        }
+
+        if ($request->filled('room_id')) {
+            $query->where('room_id', $request->room_id);
+        }
+
+        if ($request->filled('bidang_id')) {
+            $query->where('bidang_id', $request->bidang_id);
+        }
+
+        if ($request->filled('date_from')) {
+            $query->whereDate('booking_date', '>=', $request->date_from);
+        }
+
+        if ($request->filled('date_to')) {
+            $query->whereDate('booking_date', '<=', $request->date_to);
+        }
+
+        if ($request->filled('period')) {
+            $period = $request->period;
+            $startDate = Carbon::now();
+
+            switch ($period) {
+                case 'today':
+                    $query->whereDate('booking_date', Carbon::today());
+                    break;
+                case 'week':
+                    $query->whereBetween('booking_date', [
+                        Carbon::now()->startOfWeek(),
+                        Carbon::now()->endOfWeek()
+                    ]);
+                    break;
+                case 'month':
+                    $query->whereMonth('booking_date', Carbon::now()->month)
+                          ->whereYear('booking_date', Carbon::now()->year);
+                    break;
+                case 'year':
+                    $query->whereYear('booking_date', Carbon::now()->year);
+                    break;
+            }
+        }
+
+        $bookings = $query->orderBy('booking_date', 'desc')->get();
+
+        // Get filter options
+        $rooms = Room::active()->orderBy('name')->get();
+        $bidangs = Bidang::active()->orderBy('nama')->get();
+
+        // Statistics
+        $stats = [
+            'total' => $bookings->count(),
+            'approved' => $bookings->where('status', 'approved')->count(),
+            'pending' => $bookings->where('status', 'pending')->count(),
+            'rejected' => $bookings->where('status', 'rejected')->count(),
+            'cancelled' => $bookings->where('status', 'cancelled')->count(),
+        ];
+
+        // Room usage statistics
+        $roomStats = $bookings->where('status', 'approved')
+            ->groupBy('room.name')
+            ->map(function ($group) {
+                return $group->count();
+            })
+            ->sortDesc()
+            ->take(10);
+
+        // Monthly statistics
+        $monthlyStats = $bookings->where('status', 'approved')
+            ->groupBy(function ($booking) {
+                return Carbon::parse($booking->booking_date)->format('Y-m');
+            })
+            ->map(function ($group) {
+                return $group->count();
+            })
+            ->sortKeys();
+
+        return view('admin.reports.bookings', compact(
+            'bookings',
+            'rooms',
+            'bidangs',
+            'stats',
+            'roomStats',
+            'monthlyStats'
+        ));
+    }
+
+    /**
+     * Export booking reports
+     */
+    public function exportReports(Request $request)
+    {
+        $query = Booking::with(['room', 'user', 'bidang']);
+
+        // Apply same filters as reports method
+        if ($request->filled('status')) {
+            $query->where('status', $request->status);
+        }
+
+        if ($request->filled('room_id')) {
+            $query->where('room_id', $request->room_id);
+        }
+
+        if ($request->filled('bidang_id')) {
+            $query->where('bidang_id', $request->bidang_id);
+        }
+
+        if ($request->filled('date_from')) {
+            $query->whereDate('booking_date', '>=', $request->date_from);
+        }
+
+        if ($request->filled('date_to')) {
+            $query->whereDate('booking_date', '<=', $request->date_to);
+        }
+
+        if ($request->filled('period')) {
+            $period = $request->period;
+
+            switch ($period) {
+                case 'today':
+                    $query->whereDate('booking_date', Carbon::today());
+                    break;
+                case 'week':
+                    $query->whereBetween('booking_date', [
+                        Carbon::now()->startOfWeek(),
+                        Carbon::now()->endOfWeek()
+                    ]);
+                    break;
+                case 'month':
+                    $query->whereMonth('booking_date', Carbon::now()->month)
+                          ->whereYear('booking_date', Carbon::now()->year);
+                    break;
+                case 'year':
+                    $query->whereYear('booking_date', Carbon::now()->year);
+                    break;
+            }
+        }
+
+        $bookings = $query->orderBy('booking_date', 'desc')->get();
+
+        // Generate filename based on filters
+        $filename = 'laporan_peminjaman_' . date('Y-m-d_H-i-s') . '.csv';
+
+        $headers = [
+            'Content-Type' => 'text/csv',
+            'Content-Disposition' => 'attachment; filename="' . $filename . '"',
+        ];
+
+        $callback = function() use ($bookings) {
+            $file = fopen('php://output', 'w');
+
+            // Add BOM for proper UTF-8 encoding in Excel
+            fwrite($file, "\xEF\xBB\xBF");
+
+            // Header row
+            fputcsv($file, [
+                'Kode Booking',
+                'Judul Kegiatan',
+                'Ruangan',
+                'Bidang',
+                'Tanggal',
+                'Jam Mulai',
+                'Jam Selesai',
+                'Pemohon',
+                'NIP',
+                'Email',
+                'Telepon',
+                'Status',
+                'Dibuat Pada'
+            ]);
+
+            // Data rows
+            foreach ($bookings as $booking) {
+                fputcsv($file, [
+                    $booking->booking_code,
+                    $booking->title,
+                    $booking->room->name,
+                    $booking->bidang->nama ?? '-',
+                    Carbon::parse($booking->booking_date)->format('d/m/Y'),
+                    $booking->start_time,
+                    $booking->end_time,
+                    $booking->user->name,
+                    $booking->user->nip ?? '-',
+                    $booking->contact_email,
+                    $booking->contact_phone,
+                    ucfirst($booking->status),
+                    Carbon::parse($booking->created_at)->format('d/m/Y H:i')
+                ]);
+            }
+
+            fclose($file);
+        };
+
+        return response()->stream($callback, 200, $headers);
+    }
 }

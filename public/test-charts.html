@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chart Test</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.min.js"></script>
+</head>
+<body>
+    <h1>Chart Test</h1>
+
+    <div style="width: 400px; height: 300px; margin: 20px;">
+        <h3>Room Usage Chart</h3>
+        <canvas id="roomChart"></canvas>
+    </div>
+
+    <div style="width: 400px; height: 300px; margin: 20px;">
+        <h3>Monthly Trend Chart</h3>
+        <canvas id="monthlyChart"></canvas>
+    </div>
+
+    <script>
+        console.log('Chart.js version:', Chart.version);
+
+        // Room Usage Chart
+        const roomCtx = document.getElementById('roomChart').getContext('2d');
+        const roomData = {
+            "Ruang Diskusi A": 4,
+            "Aula Utama": 4,
+            "Ruang Rapat Bidang Haji": 3,
+            "Ruang Arsip (Non-Aktif)": 3,
+            "Ruang Serba Guna": 3
+        };
+
+        const roomChart = new Chart(roomCtx, {
+            type: 'doughnut',
+            data: {
+                labels: Object.keys(roomData),
+                datasets: [{
+                    data: Object.values(roomData),
+                    backgroundColor: [
+                        '#007bff', '#28a745', '#ffc107', '#dc3545', '#6f42c1'
+                    ]
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom'
+                    }
+                }
+            }
+        });
+
+        // Monthly Trend Chart
+        const monthlyCtx = document.getElementById('monthlyChart').getContext('2d');
+        const monthlyData = {
+            "2025-07": 7,
+            "2025-08": 6,
+            "2025-09": 7,
+            "2025-10": 4
+        };
+
+        const monthlyLabels = [];
+        const monthlyValues = [];
+
+        Object.keys(monthlyData).forEach(function(month) {
+            const date = new Date(month + '-01');
+            const monthName = date.toLocaleDateString('id-ID', { year: 'numeric', month: 'short' });
+            monthlyLabels.push(monthName);
+            monthlyValues.push(monthlyData[month]);
+        });
+
+        const monthlyChart = new Chart(monthlyCtx, {
+            type: 'line',
+            data: {
+                labels: monthlyLabels,
+                datasets: [{
+                    label: 'Jumlah Peminjaman',
+                    data: monthlyValues,
+                    borderColor: '#007bff',
+                    backgroundColor: 'rgba(0, 123, 255, 0.1)',
+                    tension: 0.4,
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            stepSize: 1
+                        }
+                    }
+                }
+            }
+        });
+
+        console.log('Charts initialized successfully');
+    </script>
+</body>
+</html>
