@@ -99,10 +99,17 @@
             .fc-event-title {
                 font-weight: 600 !important;
             }
+            .fc-event-room {
+                font-size: 9px !important;
+                opacity: 0.9 !important;
+                font-style: italic !important;
+                color: rgba(255, 255, 255, 0.9) !important;
+            }
             .fc-event-bidang {
                 font-size: 9px !important;
                 opacity: 0.9 !important;
                 font-style: italic !important;
+                color: rgba(255, 255, 255, 0.8) !important;
             }
         </style>
     </head>
@@ -169,47 +176,6 @@
                                 @endauth
                             </div>
                         @endif
-
-                        <div class="mt-5">
-                            <div class="row">
-                                <div class="col-sm-6 mb-3">
-                                    <div class="card h-100">
-                                        <div class="card-body text-center">
-                                            <i class="fas fa-home fa-2x text-primary mb-3"></i>
-                                            <h6>Daftar Ruangan</h6>
-                                            <small class="text-muted">Kelola data ruangan</small>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6 mb-3">
-                                    <div class="card h-100">
-                                        <div class="card-body text-center">
-                                            <i class="fas fa-calendar-alt fa-2x text-warning mb-3"></i>
-                                            <h6>Peminjaman</h6>
-                                            <small class="text-muted">Kelola peminjaman ruang</small>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6 mb-3">
-                                    <div class="card h-100">
-                                        <div class="card-body text-center">
-                                            <i class="fas fa-building fa-2x text-info mb-3"></i>
-                                            <h6>Master Bidang</h6>
-                                            <small class="text-muted">Kelola data bidang</small>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6 mb-3">
-                                    <div class="card h-100">
-                                        <div class="card-body text-center">
-                                            <i class="fas fa-chart-bar fa-2x text-success mb-3"></i>
-                                            <h6>Laporan</h6>
-                                            <small class="text-muted">Laporan peminjaman</small>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -234,6 +200,14 @@
                             center: 'title',
                             right: 'today'
                         },
+                        buttonText: {
+                            today: 'Hari Ini',
+                            month: 'Bulan',
+                            week: 'Minggu',
+                            day: 'Hari',
+                            list: 'List'
+                        },
+                        locale: 'id',
                         dayMaxEvents: 2,
                         moreLinkClick: 'popover',
                         fixedWeekCount: false,
@@ -255,7 +229,12 @@
                                             color: '#28a745',
                                             extendedProps: {
                                                 room: 'Ruang Meeting A',
-                                                time: '09:00-11:00'
+                                                bidang: 'Sekretariat',
+                                                pic: 'Dr. Ahmad Sulaiman',
+                                                status: 'approved',
+                                                time: '09:00-11:00',
+                                                participants_count: 15,
+                                                description: 'Rapat koordinasi bulanan untuk evaluasi program kerja'
                                             }
                                         },
                                         {
@@ -264,7 +243,12 @@
                                             color: '#ffc107',
                                             extendedProps: {
                                                 room: 'Ruang Workshop B',
-                                                time: '13:00-16:00'
+                                                bidang: 'Bimas Islam',
+                                                pic: 'Dra. Siti Fatimah',
+                                                status: 'pending',
+                                                time: '13:00-16:00',
+                                                participants_count: 25,
+                                                description: 'Workshop peningkatan kapasitas SDM'
                                             }
                                         },
                                         {
@@ -274,19 +258,40 @@
                                             color: '#dc3545',
                                             extendedProps: {
                                                 room: 'Aula Utama',
-                                                time: 'Full Day'
+                                                bidang: 'Pendidikan Islam',
+                                                pic: 'Prof. Dr. Muhammad Yusuf',
+                                                status: 'approved',
+                                                time: 'Full Day',
+                                                participants_count: 200,
+                                                description: 'Seminar nasional pendidikan Islam di era digital'
                                             }
                                         }
                                     ]);
                                 });
                         },
                         eventDidMount: function(info) {
+                            // Add room name to event display
+                            if (info.event.extendedProps.room) {
+                                const roomEl = document.createElement('div');
+                                roomEl.className = 'fc-event-room';
+                                roomEl.textContent = info.event.extendedProps.room;
+                                if (info.el.querySelector('.fc-event-title-container')) {
+                                    info.el.querySelector('.fc-event-title-container').appendChild(roomEl);
+                                } else {
+                                    info.el.appendChild(roomEl);
+                                }
+                            }
+
                             // Add bidang to event display
                             if (info.event.extendedProps.bidang) {
                                 const bidangEl = document.createElement('div');
                                 bidangEl.className = 'fc-event-bidang';
                                 bidangEl.textContent = info.event.extendedProps.bidang;
-                                info.el.appendChild(bidangEl);
+                                if (info.el.querySelector('.fc-event-title-container')) {
+                                    info.el.querySelector('.fc-event-title-container').appendChild(bidangEl);
+                                } else {
+                                    info.el.appendChild(bidangEl);
+                                }
                             }
 
                             // Add tooltip on hover
@@ -299,16 +304,15 @@
                             });
                         },
                         eventClick: function(info) {
-                            const props = info.event.extendedProps;
-                            let alertMessage = 'Kegiatan: ' + info.event.title;
-                            alertMessage += '\nRuang: ' + (props.room || 'N/A');
-                            alertMessage += '\nBidang: ' + (props.bidang || 'N/A');
-                            alertMessage += '\nPIC: ' + (props.pic || 'N/A');
-                            alertMessage += '\nStatus: ' + (props.status || 'N/A');
-                            alertMessage += '\nWaktu: ' + (props.time || 'N/A');
-                            alert(alertMessage);
+                            showEventDetail(info.event);
                         },
-                        eventDisplay: 'block'
+                        eventDisplay: 'block',
+                        displayEventTime: true,
+                        eventTimeFormat: {
+                            hour: '2-digit',
+                            minute: '2-digit',
+                            meridiem: false
+                        }
                     });
 
                     calendar.render();
@@ -320,21 +324,23 @@
                 function showTooltip(e, event) {
                     hideTooltip();
 
+                    const props = event.extendedProps;
+                    let tooltipContent = '<strong>' + event.title + '</strong><br>';
+                    tooltipContent += 'Ruang: ' + (props.room || 'N/A') + '<br>';
+                    tooltipContent += 'Bidang: ' + (props.bidang || 'N/A') + '<br>';
+                    tooltipContent += 'PIC: ' + (props.pic || 'N/A') + '<br>';
+                    tooltipContent += 'Status: ' + (props.status || 'N/A') + '<br>';
+                    tooltipContent += 'Waktu: ' + (props.time || 'N/A');
+
                     tooltipEl = document.createElement('div');
                     tooltipEl.className = 'bidang-tooltip';
-
-                    const props = event.extendedProps;
-                    let content = '<strong>' + event.title + '</strong>';
-                    if (props.bidang) content += '<br>Bidang: ' + props.bidang;
-                    if (props.room) content += '<br>Ruang: ' + props.room;
-                    if (props.time) content += '<br>Waktu: ' + props.time;
-
-                    tooltipEl.innerHTML = content;
+                    tooltipEl.innerHTML = tooltipContent;
                     document.body.appendChild(tooltipEl);
 
+                    // Position tooltip
                     const rect = e.target.getBoundingClientRect();
-                    tooltipEl.style.left = (rect.left + rect.width/2 - tooltipEl.offsetWidth/2) + 'px';
-                    tooltipEl.style.top = (rect.top - tooltipEl.offsetHeight - 5) + 'px';
+                    tooltipEl.style.left = (rect.left + window.scrollX + 10) + 'px';
+                    tooltipEl.style.top = (rect.top + window.scrollY - 10) + 'px';
 
                     setTimeout(() => tooltipEl.classList.add('show'), 10);
                 }
@@ -343,6 +349,31 @@
                     if (tooltipEl) {
                         tooltipEl.remove();
                         tooltipEl = null;
+                    }
+                }
+
+                function showEventDetail(event) {
+                    const props = event.extendedProps;
+                    let alertMessage = '🎯 Kegiatan: ' + event.title + '\n';
+                    alertMessage += '🏢 Ruang: ' + (props.room || 'N/A') + '\n';
+                    alertMessage += '🏛️ Bidang: ' + (props.bidang || 'N/A') + '\n';
+                    alertMessage += '👤 PIC: ' + (props.pic || 'N/A') + '\n';
+                    alertMessage += '📊 Status: ' + (props.status || 'N/A') + '\n';
+                    alertMessage += '⏰ Waktu: ' + (props.time || 'N/A') + '\n';
+                    alertMessage += '👥 Peserta: ' + (props.participants_count || 0) + ' orang\n';
+                    if (props.description) {
+                        alertMessage += '📝 Deskripsi: ' + props.description;
+                    }
+                    alert(alertMessage);
+                }
+
+                function getStatusColor(status) {
+                    switch(status) {
+                        case 'approved': return 'success';
+                        case 'pending': return 'warning';
+                        case 'rejected': return 'danger';
+                        case 'cancelled': return 'secondary';
+                        default: return 'secondary';
                     }
                 }
             });
