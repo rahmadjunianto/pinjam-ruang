@@ -107,7 +107,7 @@
                         <li>Memantau status peminjaman Anda</li>
                         <li>Mengelola profil dan data pribadi</li>
                     </ul>
-                    
+
                     <div class="alert alert-info">
                         <h6><i class="fas fa-info-circle mr-2"></i>Persyaratan Sistem:</h6>
                         <ul class="mb-0">
@@ -146,7 +146,7 @@
 
                     <div class="row">
                         <div class="col-md-6">
-                            <img src="{{ asset('images/login-example.png') }}" alt="Login Example" class="img-fluid rounded border" 
+                            <img src="{{ asset('images/login-example.png') }}" alt="Login Example" class="img-fluid rounded border"
                                  onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZGRkIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkNvbnRvaCBMb2dpbjwvdGV4dD48L3N2Zz4='">
                         </div>
                         <div class="col-md-6">
@@ -172,7 +172,7 @@
                 </div>
                 <div class="card-body">
                     <p>Setelah login, Anda akan melihat dashboard yang menampilkan:</p>
-                    
+
                     <div class="row">
                         <div class="col-md-6">
                             <h6><i class="fas fa-chart-bar mr-2"></i>Statistik:</h6>
@@ -242,7 +242,7 @@
                 </div>
                 <div class="card-body">
                     <p>Fitur kalender memungkinkan Anda melihat jadwal peminjaman ruangan secara visual.</p>
-                    
+
                     <h6><i class="fas fa-eye mr-2"></i>Cara Menggunakan Kalender:</h6>
                     <ul>
                         <li>Klik menu "Kalender" untuk membuka tampilan kalender</li>
@@ -312,7 +312,7 @@
                 </div>
                 <div class="card-body">
                     <p>Sistem akan mengirimkan notifikasi untuk berbagai aktivitas:</p>
-                    
+
                     <div class="row">
                         <div class="col-md-6">
                             <h6><i class="fas fa-check-circle text-success mr-2"></i>Notifikasi Positif:</h6>
@@ -434,13 +434,13 @@ $(document).ready(function() {
     $('.guide-nav-link').on('click', function(e) {
         e.preventDefault();
         e.stopPropagation();
-        
+
         const target = $(this).attr('href');
         if ($(target).length) {
             $('html, body').animate({
                 scrollTop: $(target).offset().top - 100
             }, 500);
-            
+
             // Update active state
             $('.guide-nav-link').removeClass('active');
             $(this).addClass('active');
@@ -454,20 +454,20 @@ $(document).ready(function() {
             const id = $(this).attr('id');
             const offset = $(this).offset().top - 150;
             const height = $(this).outerHeight();
-            
+
             if (scrollTop >= offset && scrollTop < (offset + height)) {
                 $('.guide-nav-link').removeClass('active');
                 $(`.guide-nav-link[href="#${id}"]`).addClass('active');
             }
         });
     });
-    
+
     // Ensure sidebar functionality is preserved
     $(document).on('click', '.main-sidebar a', function(e) {
         // Allow sidebar links to work normally
         e.stopPropagation();
     });
-    
+
     // Prevent event bubbling for guide navigation only
     $('.guide-nav').on('click', function(e) {
         e.stopPropagation();

@@ -186,14 +186,14 @@
         position: relative;
         display: inline-block;
     }
-    
+
     .profile-user-img {
         border: 3px solid #28a745;
         border-radius: 50%;
         padding: 20px;
         background: rgba(40, 167, 69, 0.1);
     }
-    
+
     .info-box {
         box-shadow: 0 0 1px rgba(0,0,0,.125), 0 1px 3px rgba(0,0,0,.2);
         border-radius: .25rem;
@@ -205,7 +205,7 @@
         position: relative;
         width: 100%;
     }
-    
+
     .info-box .info-box-icon {
         border-radius: .25rem;
         align-items: center;
@@ -216,7 +216,7 @@
         width: 70px;
         color: #fff;
     }
-    
+
     .info-box .info-box-content {
         display: flex;
         flex-direction: column;
@@ -225,13 +225,13 @@
         margin-left: .5rem;
         padding: 0 .5rem;
     }
-    
+
     .info-box .info-box-number {
         display: block;
         font-weight: 700;
         font-size: 1.25rem;
     }
-    
+
     .info-box .info-box-text {
         display: block;
         font-size: .875rem;

@@ -102,7 +102,7 @@
                 </div>
                 <div class="card-body">
                     <p>Sebagai administrator sistem, Anda memiliki akses penuh untuk mengelola:</p>
-                    
+
                     <div class="row">
                         <div class="col-md-6">
                             <h6><i class="fas fa-users text-primary mr-2"></i>Manajemen Pengguna:</h6>
@@ -599,13 +599,13 @@ $(document).ready(function() {
     $('.guide-nav-link').on('click', function(e) {
         e.preventDefault();
         e.stopPropagation();
-        
+
         const target = $(this).attr('href');
         if ($(target).length) {
             $('html, body').animate({
                 scrollTop: $(target).offset().top - 100
             }, 500);
-            
+
             // Update active state
             $('.guide-nav-link').removeClass('active');
             $(this).addClass('active');
@@ -619,20 +619,20 @@ $(document).ready(function() {
             const id = $(this).attr('id');
             const offset = $(this).offset().top - 150;
             const height = $(this).outerHeight();
-            
+
             if (scrollTop >= offset && scrollTop < (offset + height)) {
                 $('.guide-nav-link').removeClass('active');
                 $(`.guide-nav-link[href="#${id}"]`).addClass('active');
             }
         });
     });
-    
+
     // Ensure sidebar functionality is preserved
     $(document).on('click', '.main-sidebar a', function(e) {
         // Allow sidebar links to work normally
         e.stopPropagation();
     });
-    
+
     // Prevent event bubbling for guide navigation only
     $('.guide-nav').on('click', function(e) {
         e.stopPropagation();

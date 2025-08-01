@@ -23,24 +23,24 @@
                             <i class="fas fa-home fa-3x text-muted"></i>
                         </div>
                     @endif
-                    
+
                     <div class="card-body d-flex flex-column">
                         <h5 class="card-title">{{ $room->name }}</h5>
-                        
+
                         <div class="mb-2">
                             <span class="badge badge-{{ $room->roomCategory->name === 'Ruang Rapat' ? 'primary' : ($room->roomCategory->name === 'Aula' ? 'success' : 'info') }}">
                                 {{ $room->roomCategory->name }}
                             </span>
                         </div>
-                        
+
                         <p class="card-text flex-grow-1">{{ $room->description ?: 'Tidak ada deskripsi' }}</p>
-                        
+
                         <div class="mb-3">
                             <small class="text-muted">
                                 <i class="fas fa-users mr-1"></i>Kapasitas: {{ $room->capacity }} orang
                             </small>
                         </div>
-                        
+
                         @if($room->facilities)
                             <div class="mb-3">
                                 <h6>Fasilitas:</h6>
@@ -51,7 +51,7 @@
                                 </div>
                             </div>
                         @endif
-                        
+
                         <div class="mt-auto">
                             <a href="{{ route('admin.bookings.create', ['room' => $room->id]) }}" class="btn btn-primary btn-block">
                                 <i class="fas fa-calendar-plus mr-1"></i>Pilih Ruangan Ini

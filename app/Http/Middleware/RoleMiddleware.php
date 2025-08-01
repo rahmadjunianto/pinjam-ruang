@@ -21,7 +21,7 @@ class RoleMiddleware
         }
 
         $user = Auth::user();
-        
+
         if (empty($roles)) {
             return $next($request);
         }

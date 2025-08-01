@@ -51,7 +51,7 @@ return new class extends Migration
 
         // Update existing rooms to have room_category_id
         $defaultCategory = RoomCategory::where('name', 'Ruang Rapat')->first();
-        
+
         if ($defaultCategory) {
             Room::whereNull('room_category_id')->update([
                 'room_category_id' => $defaultCategory->id

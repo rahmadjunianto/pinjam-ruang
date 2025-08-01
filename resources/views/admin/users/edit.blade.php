@@ -36,17 +36,17 @@
                 <form method="POST" action="{{ route('admin.users.update', $user) }}">
                     @csrf
                     @method('PUT')
-                    
+
                     <div class="card-body">
                         <!-- NIP -->
                         <div class="form-group">
                             <label for="nip">
                                 <i class="fas fa-id-card mr-2"></i>NIP (Nomor Induk Pegawai) <span class="text-danger">*</span>
                             </label>
-                            <input type="text" 
-                                   class="form-control @error('nip') is-invalid @enderror" 
-                                   id="nip" 
-                                   name="nip" 
+                            <input type="text"
+                                   class="form-control @error('nip') is-invalid @enderror"
+                                   id="nip"
+                                   name="nip"
                                    value="{{ old('nip', $user->nip) }}"
                                    placeholder="Masukkan NIP 18 digit"
                                    pattern="[0-9]{18}"
@@ -63,10 +63,10 @@
                             <label for="name">
                                 <i class="fas fa-user mr-2"></i>Nama Lengkap <span class="text-danger">*</span>
                             </label>
-                            <input type="text" 
-                                   class="form-control @error('name') is-invalid @enderror" 
-                                   id="name" 
-                                   name="name" 
+                            <input type="text"
+                                   class="form-control @error('name') is-invalid @enderror"
+                                   id="name"
+                                   name="name"
                                    value="{{ old('name', $user->name) }}"
                                    placeholder="Masukkan nama lengkap"
                                    required>
@@ -80,10 +80,10 @@
                             <label for="email">
                                 <i class="fas fa-envelope mr-2"></i>Alamat Email <span class="text-danger">*</span>
                             </label>
-                            <input type="email" 
-                                   class="form-control @error('email') is-invalid @enderror" 
-                                   id="email" 
-                                   name="email" 
+                            <input type="email"
+                                   class="form-control @error('email') is-invalid @enderror"
+                                   id="email"
+                                   name="email"
                                    value="{{ old('email', $user->email) }}"
                                    placeholder="Masukkan alamat email"
                                    required>
@@ -97,12 +97,12 @@
                             <label for="bidang_id">
                                 <i class="fas fa-building mr-2"></i>Bidang
                             </label>
-                            <select class="form-control @error('bidang_id') is-invalid @enderror" 
-                                    id="bidang_id" 
+                            <select class="form-control @error('bidang_id') is-invalid @enderror"
+                                    id="bidang_id"
                                     name="bidang_id">
                                 <option value="">-- Pilih Bidang --</option>
                                 @foreach($bidangs as $bidang)
-                                    <option value="{{ $bidang->id }}" 
+                                    <option value="{{ $bidang->id }}"
                                             {{ old('bidang_id', $user->bidang_id) == $bidang->id ? 'selected' : '' }}>
                                         {{ $bidang->nama }}
                                     </option>
@@ -124,9 +124,9 @@
                             <label for="password">
                                 <i class="fas fa-lock mr-2"></i>Password Baru
                             </label>
-                            <input type="password" 
-                                   class="form-control @error('password') is-invalid @enderror" 
-                                   id="password" 
+                            <input type="password"
+                                   class="form-control @error('password') is-invalid @enderror"
+                                   id="password"
                                    name="password"
                                    placeholder="Masukkan password baru (minimal 8 karakter)">
                             @error('password')
@@ -139,9 +139,9 @@
                             <label for="password_confirmation">
                                 <i class="fas fa-lock mr-2"></i>Konfirmasi Password Baru
                             </label>
-                            <input type="password" 
-                                   class="form-control" 
-                                   id="password_confirmation" 
+                            <input type="password"
+                                   class="form-control"
+                                   id="password_confirmation"
                                    name="password_confirmation"
                                    placeholder="Ulangi password baru">
                         </div>
@@ -211,13 +211,13 @@
                     </h3>
                 </div>
                 <div class="card-body">
-                    <button type="button" 
+                    <button type="button"
                             class="btn btn-warning btn-block mb-2"
                             onclick="resetPassword({{ $user->id }})">
                         <i class="fas fa-key mr-1"></i>Reset Password ke NIP
                     </button>
-                    
-                    <button type="button" 
+
+                    <button type="button"
                             class="btn {{ $user->is_active ? 'btn-secondary' : 'btn-success' }} btn-block mb-2"
                             onclick="toggleStatus({{ $user->id }})">
                         <i class="fas {{ $user->is_active ? 'fa-user-slash' : 'fa-user-check' }} mr-1"></i>
@@ -225,7 +225,7 @@
                     </button>
 
                     @if($user->bookings()->count() == 0)
-                        <button type="button" 
+                        <button type="button"
                                 class="btn btn-danger btn-block"
                                 onclick="deleteUser({{ $user->id }}, '{{ $user->name }}')">
                             <i class="fas fa-trash mr-1"></i>Hapus User
@@ -265,12 +265,12 @@
     nipInput.addEventListener('input', function() {
         // Remove non-numeric characters
         this.value = this.value.replace(/\D/g, '');
-        
+
         // Limit to 18 digits
         if (this.value.length > 18) {
             this.value = this.value.substr(0, 18);
         }
-        
+
         // Visual feedback for valid NIP length
         if (this.value.length === 18) {
             this.classList.remove('is-invalid');
@@ -286,7 +286,7 @@
     // Password confirmation validation
     const passwordInput = document.getElementById('password');
     const confirmPasswordInput = document.getElementById('password_confirmation');
-    
+
     confirmPasswordInput.addEventListener('input', function() {
         if (this.value && passwordInput.value) {
             if (this.value === passwordInput.value) {
@@ -334,7 +334,7 @@
         background-position: right 10px center;
         background-size: 16px;
     }
-    
+
     .text-danger {
         color: #dc3545 !important;
     }

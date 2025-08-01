@@ -23,7 +23,7 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="col-md-4">
             <div class="card card-success card-outline">
                 <div class="card-body box-profile">
@@ -38,7 +38,7 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="col-md-4">
             <div class="card card-info card-outline">
                 <div class="card-body box-profile">
@@ -115,7 +115,7 @@
                     <a href="{{ route('admin.help.system') }}" class="btn btn-outline-info btn-block mb-2">
                         <i class="fas fa-server mr-2"></i>Info Sistem
                     </a>
-                    
+
                     <div class="mt-3">
                         <h6><i class="fas fa-clock mr-2"></i>Jam Operasional:</h6>
                         <ul class="list-unstyled">

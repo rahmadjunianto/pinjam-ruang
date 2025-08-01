@@ -40,10 +40,10 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label for="search">Pencarian</label>
-                            <input type="text" 
-                                   class="form-control" 
-                                   id="search" 
-                                   name="search" 
+                            <input type="text"
+                                   class="form-control"
+                                   id="search"
+                                   name="search"
                                    value="{{ request('search') }}"
                                    placeholder="Nama, NIP, atau Email...">
                         </div>
@@ -54,7 +54,7 @@
                             <select class="form-control" id="bidang_id" name="bidang_id">
                                 <option value="">Semua Bidang</option>
                                 @foreach($bidangs as $bidang)
-                                    <option value="{{ $bidang->id }}" 
+                                    <option value="{{ $bidang->id }}"
                                             {{ request('bidang_id') == $bidang->id ? 'selected' : '' }}>
                                         {{ $bidang->nama }}
                                     </option>
@@ -130,29 +130,29 @@
                                 </td>
                                 <td>
                                     <div class="btn-group" role="group">
-                                        <a href="{{ route('admin.users.show', $user) }}" 
-                                           class="btn btn-info btn-sm" 
+                                        <a href="{{ route('admin.users.show', $user) }}"
+                                           class="btn btn-info btn-sm"
                                            title="Lihat Detail">
                                             <i class="fas fa-eye"></i>
                                         </a>
-                                        <a href="{{ route('admin.users.edit', $user) }}" 
+                                        <a href="{{ route('admin.users.edit', $user) }}"
                                            class="btn btn-primary btn-sm"
                                            title="Edit">
                                             <i class="fas fa-edit"></i>
                                         </a>
-                                        <button type="button" 
+                                        <button type="button"
                                                 class="btn btn-warning btn-sm"
                                                 title="Reset Password"
                                                 onclick="resetPassword({{ $user->id }})">
                                             <i class="fas fa-key"></i>
                                         </button>
-                                        <button type="button" 
+                                        <button type="button"
                                                 class="btn {{ $user->is_active ? 'btn-secondary' : 'btn-success' }} btn-sm"
                                                 title="{{ $user->is_active ? 'Nonaktifkan' : 'Aktifkan' }}"
                                                 onclick="toggleStatus({{ $user->id }})">
                                             <i class="fas {{ $user->is_active ? 'fa-user-slash' : 'fa-user-check' }}"></i>
                                         </button>
-                                        <button type="button" 
+                                        <button type="button"
                                                 class="btn btn-danger btn-sm"
                                                 title="Hapus"
                                                 onclick="deleteUser({{ $user->id }}, '{{ $user->name }}')">

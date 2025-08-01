@@ -331,9 +331,9 @@
                     </div>
                 </div>
             </div>
-            
+
             <hr>
-            
+
             <div class="text-center">
                 <p class="text-muted mb-0">
                     Dikembangkan dengan ❤️ untuk Kementerian Agama Republik Indonesia
@@ -347,7 +347,7 @@
 <script>
 function refreshHealthCheck() {
     const container = $('#healthCheckContainer');
-    
+
     // Show loading
     container.html(`
         <div class="col-12 text-center">
@@ -355,7 +355,7 @@ function refreshHealthCheck() {
             <p class="mt-2">Memeriksa status sistem...</p>
         </div>
     `);
-    
+
     // Simulate health check
     setTimeout(() => {
         location.reload();

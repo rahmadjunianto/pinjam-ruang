@@ -14,7 +14,7 @@ class PermissionController extends Controller
     public function index()
     {
         $users = User::with('bidang')->paginate(10);
-        
+
         return view('admin.permissions.index', compact('users'));
     }
 
@@ -52,7 +52,7 @@ class PermissionController extends Controller
                 'permissions' => [
                     'Dashboard Analytics',
                     'Manajemen User',
-                    'Manajemen Ruangan', 
+                    'Manajemen Ruangan',
                     'Manajemen Peminjaman',
                     'Persetujuan Booking',
                     'Laporan & Export',

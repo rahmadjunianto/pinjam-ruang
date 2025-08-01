@@ -490,12 +490,12 @@
         nipInput.addEventListener('input', function() {
             // Remove non-numeric characters
             this.value = this.value.replace(/\D/g, '');
-            
+
             // Limit to 18 digits
             if (this.value.length > 18) {
                 this.value = this.value.substr(0, 18);
             }
-            
+
             // Visual feedback for valid NIP length
             if (this.value.length === 18) {
                 this.classList.remove('is-invalid');

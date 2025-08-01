@@ -18,10 +18,10 @@ class BookingController extends Controller
     public function index()
     {
         $user = Auth::user();
-        
+
         // Base query
         $query = Booking::with(['room', 'user', 'bidang']);
-        
+
         // Filter based on user role
         if ($user->role === 'user') {
             // Users can only see their own bookings
@@ -31,7 +31,7 @@ class BookingController extends Controller
             $query->where('status', 'approved');
         }
         // Admin can see all bookings (no additional filter)
-        
+
         $bookings = $query
             ->when(request('search'), function ($query) {
                 $search = request('search');
@@ -129,14 +129,14 @@ class BookingController extends Controller
     public function checkRoomAvailability(Room $room, Request $request)
     {
         $date = $request->get('date', today()->format('Y-m-d'));
-        
+
         $existingBookings = Booking::where('room_id', $room->id)
                                   ->where('booking_date', $date)
                                   ->where('status', '!=', 'rejected')
                                   ->where('status', '!=', 'cancelled')
                                   ->orderBy('start_time')
                                   ->get(['start_time', 'end_time', 'title', 'status']);
-        
+
         return response()->json([
             'room' => $room->only(['id', 'name', 'capacity']),
             'date' => $date,

@@ -30,17 +30,17 @@
 
                 <form method="POST" action="{{ route('admin.users.store') }}">
                     @csrf
-                    
+
                     <div class="card-body">
                         <!-- NIP -->
                         <div class="form-group">
                             <label for="nip">
                                 <i class="fas fa-id-card mr-2"></i>NIP (Nomor Induk Pegawai) <span class="text-danger">*</span>
                             </label>
-                            <input type="text" 
-                                   class="form-control @error('nip') is-invalid @enderror" 
-                                   id="nip" 
-                                   name="nip" 
+                            <input type="text"
+                                   class="form-control @error('nip') is-invalid @enderror"
+                                   id="nip"
+                                   name="nip"
                                    value="{{ old('nip') }}"
                                    placeholder="Masukkan NIP 18 digit"
                                    pattern="[0-9]{18}"
@@ -57,10 +57,10 @@
                             <label for="name">
                                 <i class="fas fa-user mr-2"></i>Nama Lengkap <span class="text-danger">*</span>
                             </label>
-                            <input type="text" 
-                                   class="form-control @error('name') is-invalid @enderror" 
-                                   id="name" 
-                                   name="name" 
+                            <input type="text"
+                                   class="form-control @error('name') is-invalid @enderror"
+                                   id="name"
+                                   name="name"
                                    value="{{ old('name') }}"
                                    placeholder="Masukkan nama lengkap"
                                    required>
@@ -74,10 +74,10 @@
                             <label for="email">
                                 <i class="fas fa-envelope mr-2"></i>Alamat Email <span class="text-danger">*</span>
                             </label>
-                            <input type="email" 
-                                   class="form-control @error('email') is-invalid @enderror" 
-                                   id="email" 
-                                   name="email" 
+                            <input type="email"
+                                   class="form-control @error('email') is-invalid @enderror"
+                                   id="email"
+                                   name="email"
                                    value="{{ old('email') }}"
                                    placeholder="Masukkan alamat email"
                                    required>
@@ -91,12 +91,12 @@
                             <label for="bidang_id">
                                 <i class="fas fa-building mr-2"></i>Bidang
                             </label>
-                            <select class="form-control @error('bidang_id') is-invalid @enderror" 
-                                    id="bidang_id" 
+                            <select class="form-control @error('bidang_id') is-invalid @enderror"
+                                    id="bidang_id"
                                     name="bidang_id">
                                 <option value="">-- Pilih Bidang --</option>
                                 @foreach($bidangs as $bidang)
-                                    <option value="{{ $bidang->id }}" 
+                                    <option value="{{ $bidang->id }}"
                                             {{ old('bidang_id') == $bidang->id ? 'selected' : '' }}>
                                         {{ $bidang->nama }}
                                     </option>
@@ -113,9 +113,9 @@
                             <label for="password">
                                 <i class="fas fa-lock mr-2"></i>Password <span class="text-danger">*</span>
                             </label>
-                            <input type="password" 
-                                   class="form-control @error('password') is-invalid @enderror" 
-                                   id="password" 
+                            <input type="password"
+                                   class="form-control @error('password') is-invalid @enderror"
+                                   id="password"
                                    name="password"
                                    placeholder="Masukkan password (minimal 8 karakter)"
                                    required>
@@ -129,9 +129,9 @@
                             <label for="password_confirmation">
                                 <i class="fas fa-lock mr-2"></i>Konfirmasi Password <span class="text-danger">*</span>
                             </label>
-                            <input type="password" 
-                                   class="form-control" 
-                                   id="password_confirmation" 
+                            <input type="password"
+                                   class="form-control"
+                                   id="password_confirmation"
                                    name="password_confirmation"
                                    placeholder="Ulangi password"
                                    required>
@@ -191,12 +191,12 @@
     nipInput.addEventListener('input', function() {
         // Remove non-numeric characters
         this.value = this.value.replace(/\D/g, '');
-        
+
         // Limit to 18 digits
         if (this.value.length > 18) {
             this.value = this.value.substr(0, 18);
         }
-        
+
         // Visual feedback for valid NIP length
         if (this.value.length === 18) {
             this.classList.remove('is-invalid');
@@ -212,7 +212,7 @@
     // Auto-generate email suggestion based on name
     const nameInput = document.getElementById('name');
     const emailInput = document.getElementById('email');
-    
+
     nameInput.addEventListener('blur', function() {
         if (this.value && !emailInput.value) {
             // Generate email suggestion
@@ -225,7 +225,7 @@
     // Password confirmation validation
     const passwordInput = document.getElementById('password');
     const confirmPasswordInput = document.getElementById('password_confirmation');
-    
+
     confirmPasswordInput.addEventListener('input', function() {
         if (this.value && passwordInput.value) {
             if (this.value === passwordInput.value) {
@@ -249,7 +249,7 @@
         background-position: right 10px center;
         background-size: 16px;
     }
-    
+
     .text-danger {
         color: #dc3545 !important;
     }

@@ -61,7 +61,7 @@
             <div class="card faq-item" data-category="{{ $faq['category'] }}">
                 <div class="card-header" id="heading{{ $index }}">
                     <h6 class="mb-0">
-                        <button class="btn btn-link text-left w-100" type="button" data-toggle="collapse" 
+                        <button class="btn btn-link text-left w-100" type="button" data-toggle="collapse"
                                 data-target="#collapse{{ $index }}" aria-expanded="false">
                             <div class="d-flex justify-content-between align-items-center">
                                 <span>
@@ -166,7 +166,7 @@
             <form id="suggestFaqForm">
                 <div class="form-group">
                     <label for="suggestedQuestion">Pertanyaan yang Disarankan:</label>
-                    <textarea class="form-control" id="suggestedQuestion" rows="3" 
+                    <textarea class="form-control" id="suggestedQuestion" rows="3"
                               placeholder="Tulis pertanyaan yang menurut Anda perlu ditambahkan ke FAQ"></textarea>
                 </div>
                 <div class="form-group">
@@ -204,11 +204,11 @@ $(document).ready(function() {
     $('#faqSearch').on('keyup', function() {
         const searchTerm = $(this).val().toLowerCase();
         let hasResults = false;
-        
+
         $('.faq-item').each(function() {
             const question = $(this).find('button').text().toLowerCase();
             const answer = $(this).find('.card-body').text().toLowerCase();
-            
+
             if (question.includes(searchTerm) || answer.includes(searchTerm)) {
                 $(this).show();
                 hasResults = true;
@@ -216,7 +216,7 @@ $(document).ready(function() {
                 $(this).hide();
             }
         });
-        
+
         // Show/hide no results message
         if (hasResults || searchTerm === '') {
             $('#noResults').addClass('d-none');
@@ -224,11 +224,11 @@ $(document).ready(function() {
             $('#noResults').removeClass('d-none');
         }
     });
-    
+
     // Category filter
     $('input[name="category"]').on('change', function() {
         const selectedCategory = $(this).val();
-        
+
         if (selectedCategory === 'all') {
             $('.faq-item').show();
         } else {
@@ -240,24 +240,24 @@ $(document).ready(function() {
                 }
             });
         }
-        
+
         // Clear search when changing category
         $('#faqSearch').val('');
         $('#noResults').addClass('d-none');
     });
-    
+
     // Suggest FAQ form
     $('#suggestFaqForm').on('submit', function(e) {
         e.preventDefault();
-        
+
         const question = $('#suggestedQuestion').val();
         const category = $('#questionCategory').val();
-        
+
         if (!question.trim()) {
             Swal.fire('Error', 'Silakan tulis pertanyaan terlebih dahulu!', 'error');
             return;
         }
-        
+
         // Simulate sending suggestion
         Swal.fire({
             title: 'Terima Kasih!',
@@ -272,10 +272,10 @@ $(document).ready(function() {
 
 // Mark helpful function
 function markHelpful(index, isHelpful) {
-    const message = isHelpful ? 
-        'Terima kasih! Feedback Anda membantu kami meningkatkan FAQ.' : 
+    const message = isHelpful ?
+        'Terima kasih! Feedback Anda membantu kami meningkatkan FAQ.' :
         'Terima kasih atas feedback Anda. Kami akan berusaha meningkatkan jawaban ini.';
-    
+
     Swal.fire({
         title: 'Feedback Diterima',
         text: message,

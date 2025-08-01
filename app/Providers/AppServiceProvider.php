@@ -24,7 +24,7 @@ class AppServiceProvider extends ServiceProvider
     {
         Paginator::defaultView('vendor.pagination.adminlte');
         Paginator::defaultSimpleView('vendor.pagination.simple-adminlte');
-        
+
         // Register custom NIP user provider
         Auth::provider('nip', function ($app, array $config) {
             return new NipUserProvider($app['hash'], $config['model']);

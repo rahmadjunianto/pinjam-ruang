@@ -15,11 +15,11 @@ class RoleFilter implements FilterInterface
         }
 
         $user = Auth::user();
-        
+
         // Check if item has role restriction
         if (isset($item['role'])) {
             $allowedRoles = is_array($item['role']) ? $item['role'] : [$item['role']];
-            
+
             // If user doesn't have required role, hide the menu item
             if (!in_array($user->role, $allowedRoles)) {
                 return false;
@@ -29,19 +29,19 @@ class RoleFilter implements FilterInterface
         // Check submenu items for role restrictions
         if (isset($item['submenu'])) {
             $filteredSubmenu = [];
-            
+
             foreach ($item['submenu'] as $subitem) {
                 $filteredSubitem = $this->transform($subitem);
                 if ($filteredSubitem !== false) {
                     $filteredSubmenu[] = $filteredSubitem;
                 }
             }
-            
+
             // If no submenu items remain, hide the parent menu
             if (empty($filteredSubmenu)) {
                 return false;
             }
-            
+
             $item['submenu'] = $filteredSubmenu;
         }
 

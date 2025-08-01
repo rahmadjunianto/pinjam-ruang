@@ -89,10 +89,10 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
         Route::get('/create', [BookingController::class, 'create'])->middleware('role:admin,user')->name('create'); // Admin and User only
         Route::post('/', [BookingController::class, 'store'])->middleware('role:admin,user')->name('store'); // Admin and User only
         Route::get('/{booking}', [BookingController::class, 'show'])->name('show'); // All users
-        
+
         // Room availability check for booking (accessible by users)
         Route::get('/room/{room}/availability', [BookingController::class, 'checkRoomAvailability'])->middleware('role:admin,user')->name('room-availability');
-        
+
         // Admin only routes
         Route::middleware('role:admin')->group(function () {
             Route::get('/{booking}/edit', [BookingController::class, 'edit'])->name('edit');
@@ -101,7 +101,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
             Route::patch('/{booking}/approve', [BookingController::class, 'approve'])->name('approve');
             Route::patch('/{booking}/reject', [BookingController::class, 'reject'])->name('reject');
         });
-        
+
         // User can cancel their own bookings
         Route::patch('/{booking}/cancel', [BookingController::class, 'cancel'])->middleware('role:admin,user')->name('cancel');
     });

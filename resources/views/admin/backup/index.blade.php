@@ -113,11 +113,11 @@
                                     </td>
                                     <td>
                                         <div class="btn-group">
-                                            <a href="{{ route('admin.backup.download', $backup['name']) }}" 
+                                            <a href="{{ route('admin.backup.download', $backup['name']) }}"
                                                class="btn btn-sm btn-success" title="Download">
                                                 <i class="fas fa-download"></i>
                                             </a>
-                                            <button type="button" class="btn btn-sm btn-danger" 
+                                            <button type="button" class="btn btn-sm btn-danger"
                                                     onclick="deleteBackup('{{ $backup['name'] }}')" title="Hapus">
                                                 <i class="fas fa-trash"></i>
                                             </button>
@@ -171,7 +171,7 @@
                     </ul>
                 </div>
             </div>
-            
+
             <div class="alert alert-warning mt-3">
                 <h6><i class="fas fa-exclamation-triangle mr-2"></i>Perhatian:</h6>
                 <ul class="mb-0">
@@ -209,7 +209,7 @@
                     </div>
                     <div class="form-group">
                         <label for="backupDescription">Deskripsi (Opsional):</label>
-                        <textarea class="form-control" id="backupDescription" name="description" 
+                        <textarea class="form-control" id="backupDescription" name="description"
                                   rows="3" placeholder="Contoh: Backup sebelum update sistem"></textarea>
                     </div>
                 </form>
@@ -306,7 +306,7 @@ function deleteBackup(fileName) {
     $('#deleteBackupModal').modal('show');
     document.getElementById('confirmDeleteBtn').onclick = function() {
         const deleteUrl = `{{ url('admin/backup/delete') }}/${fileName}`;
-        
+
         fetch(deleteUrl, {
             method: 'DELETE',
             headers: {

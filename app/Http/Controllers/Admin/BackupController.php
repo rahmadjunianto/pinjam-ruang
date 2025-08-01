@@ -20,7 +20,7 @@ class BackupController extends Controller
     {
         $backups = $this->getBackupFiles();
         $lastBackup = $this->getLastBackupDate();
-        
+
         return view('admin.backup.index', compact('backups', 'lastBackup'));
     }
 
@@ -38,7 +38,7 @@ class BackupController extends Controller
         ]);
 
         $type = $request->input('type', 'database');
-        
+
         try {
             if ($type === 'full') {
                 return $this->createFullBackup();
@@ -52,7 +52,7 @@ class BackupController extends Controller
                     'message' => 'Error: ' . $e->getMessage()
                 ]);
             }
-            
+
             return redirect()->back()
                            ->with('error', 'Error: ' . $e->getMessage());
         }
@@ -66,7 +66,7 @@ class BackupController extends Controller
         try {
             $filename = 'backup_db_' . date('Y-m-d_H-i-s') . '.sql';
             $path = storage_path('app/backups/' . $filename);
-            
+
             // Create backup directory if not exists
             if (!file_exists(storage_path('app/backups'))) {
                 mkdir(storage_path('app/backups'), 0755, true);
@@ -80,7 +80,7 @@ class BackupController extends Controller
 
             // Create mysqldump command
             $command = "mysqldump -h {$host} -u {$username} -p{$password} {$database} > {$path}";
-            
+
             // Execute command
             exec($command, $output, $returnCode);
 
@@ -91,7 +91,7 @@ class BackupController extends Controller
                         'message' => 'Backup database berhasil dibuat!'
                     ]);
                 }
-                
+
                 return redirect()->back()
                                ->with('success', 'Backup database berhasil dibuat!');
             } else {
@@ -101,7 +101,7 @@ class BackupController extends Controller
                         'message' => 'Gagal membuat backup database!'
                     ]);
                 }
-                
+
                 return redirect()->back()
                                ->with('error', 'Gagal membuat backup database!');
             }
@@ -112,7 +112,7 @@ class BackupController extends Controller
                     'message' => 'Error: ' . $e->getMessage()
                 ]);
             }
-            
+
             return redirect()->back()
                            ->with('error', 'Error: ' . $e->getMessage());
         }
@@ -126,7 +126,7 @@ class BackupController extends Controller
         try {
             $filename = 'backup_full_' . date('Y-m-d_H-i-s') . '.zip';
             $zipPath = storage_path('app/backups/' . $filename);
-            
+
             // Create backup directory if not exists
             if (!file_exists(storage_path('app/backups'))) {
                 mkdir(storage_path('app/backups'), 0755, true);
@@ -134,14 +134,14 @@ class BackupController extends Controller
 
             $zip = new ZipArchive;
             if ($zip->open($zipPath, ZipArchive::CREATE) === TRUE) {
-                
+
                 // Add important directories
                 $this->addDirectoryToZip($zip, app_path(), 'app/');
                 $this->addDirectoryToZip($zip, config_path(), 'config/');
                 $this->addDirectoryToZip($zip, database_path(), 'database/');
                 $this->addDirectoryToZip($zip, resource_path(), 'resources/');
                 $this->addDirectoryToZip($zip, public_path(), 'public/');
-                
+
                 // Add important files
                 $zip->addFile(base_path('.env'), '.env');
                 $zip->addFile(base_path('composer.json'), 'composer.json');
@@ -155,7 +155,7 @@ class BackupController extends Controller
                         'message' => 'Backup lengkap berhasil dibuat!'
                     ]);
                 }
-                
+
                 return redirect()->back()
                                ->with('success', 'Backup lengkap berhasil dibuat!');
             } else {
@@ -165,7 +165,7 @@ class BackupController extends Controller
                         'message' => 'Gagal membuat file backup!'
                     ]);
                 }
-                
+
                 return redirect()->back()
                                ->with('error', 'Gagal membuat file backup!');
             }
@@ -176,7 +176,7 @@ class BackupController extends Controller
                     'message' => 'Error: ' . $e->getMessage()
                 ]);
             }
-            
+
             return redirect()->back()
                            ->with('error', 'Error: ' . $e->getMessage());
         }
@@ -188,7 +188,7 @@ class BackupController extends Controller
     public function download($filename)
     {
         $path = storage_path('app/backups/' . $filename);
-        
+
         if (!file_exists($path)) {
             return redirect()->back()
                            ->with('error', 'File backup tidak ditemukan!');
@@ -204,17 +204,17 @@ class BackupController extends Controller
     {
         try {
             $path = storage_path('app/backups/' . $filename);
-            
+
             if (file_exists($path)) {
                 unlink($path);
-                
+
                 if (request()->expectsJson()) {
                     return response()->json([
                         'success' => true,
                         'message' => 'File backup berhasil dihapus!'
                     ]);
                 }
-                
+
                 return redirect()->back()
                                ->with('success', 'File backup berhasil dihapus!');
             } else {
@@ -224,7 +224,7 @@ class BackupController extends Controller
                         'message' => 'File backup tidak ditemukan!'
                     ]);
                 }
-                
+
                 return redirect()->back()
                                ->with('error', 'File backup tidak ditemukan!');
             }
@@ -235,7 +235,7 @@ class BackupController extends Controller
                     'message' => 'Error: ' . $e->getMessage()
                 ]);
             }
-            
+
             return redirect()->back()
                            ->with('error', 'Error: ' . $e->getMessage());
         }
@@ -251,7 +251,7 @@ class BackupController extends Controller
 
         if (is_dir($backupPath)) {
             $files = scandir($backupPath);
-            
+
             foreach ($files as $file) {
                 if ($file != '.' && $file != '..') {
                     $filePath = $backupPath . '/' . $file;
@@ -265,7 +265,7 @@ class BackupController extends Controller
                     ];
                 }
             }
-            
+
             // Sort by timestamp descending (newest first)
             usort($backups, function($a, $b) {
                 return $b['timestamp'] - $a['timestamp'];
@@ -286,7 +286,7 @@ class BackupController extends Controller
                     if ($file != '.' && $file != '..') {
                         $fullpath = $dir . '/' . $file;
                         $zippath = $zipdir . $file;
-                        
+
                         if (is_file($fullpath)) {
                             $zip->addFile($fullpath, $zippath);
                         } elseif (is_dir($fullpath)) {
@@ -305,11 +305,11 @@ class BackupController extends Controller
     private function getLastBackupDate()
     {
         $backups = $this->getBackupFiles();
-        
+
         if (empty($backups)) {
             return null;
         }
-        
+
         $lastBackupTimestamp = max(array_column($backups, 'timestamp'));
         return date('Y-m-d H:i:s', $lastBackupTimestamp);
     }

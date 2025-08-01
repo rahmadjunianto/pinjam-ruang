@@ -24,7 +24,7 @@
                     </div>
                     <div class="card-body">
                         <p class="text-muted">{{ $role['description'] }}</p>
-                        
+
                         <h6><strong>Hak Akses:</strong></h6>
                         <ul class="list-unstyled">
                             @foreach($role['permissions'] as $permission)

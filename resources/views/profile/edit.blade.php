@@ -31,17 +31,17 @@
                 <form method="POST" action="{{ route('profile.update') }}">
                     @csrf
                     @method('PATCH')
-                    
+
                     <div class="card-body">
                         <!-- Name -->
                         <div class="form-group">
                             <label for="name">
                                 <i class="fas fa-user mr-2"></i>Nama Lengkap
                             </label>
-                            <input type="text" 
-                                   class="form-control @error('name') is-invalid @enderror" 
-                                   id="name" 
-                                   name="name" 
+                            <input type="text"
+                                   class="form-control @error('name') is-invalid @enderror"
+                                   id="name"
+                                   name="name"
                                    value="{{ old('name', $user->name) }}"
                                    placeholder="Masukkan nama lengkap Anda"
                                    required>
@@ -55,10 +55,10 @@
                             <label for="nip">
                                 <i class="fas fa-id-card mr-2"></i>NIP (Nomor Induk Pegawai)
                             </label>
-                            <input type="text" 
-                                   class="form-control @error('nip') is-invalid @enderror" 
-                                   id="nip" 
-                                   name="nip" 
+                            <input type="text"
+                                   class="form-control @error('nip') is-invalid @enderror"
+                                   id="nip"
+                                   name="nip"
                                    value="{{ old('nip', $user->nip) }}"
                                    placeholder="Masukkan NIP 18 digit Anda"
                                    pattern="[0-9]{18}"
@@ -75,10 +75,10 @@
                             <label for="email">
                                 <i class="fas fa-envelope mr-2"></i>Alamat Email
                             </label>
-                            <input type="email" 
-                                   class="form-control @error('email') is-invalid @enderror" 
-                                   id="email" 
-                                   name="email" 
+                            <input type="email"
+                                   class="form-control @error('email') is-invalid @enderror"
+                                   id="email"
+                                   name="email"
                                    value="{{ old('email', $user->email) }}"
                                    placeholder="Masukkan alamat email Anda"
                                    required>
@@ -127,16 +127,16 @@
                 <form method="POST" action="{{ route('password.update') }}">
                     @csrf
                     @method('PUT')
-                    
+
                     <div class="card-body">
                         <!-- Current Password -->
                         <div class="form-group">
                             <label for="update_password_current_password">
                                 <i class="fas fa-key mr-2"></i>Kata Sandi Saat Ini
                             </label>
-                            <input type="password" 
-                                   class="form-control @error('current_password', 'updatePassword') is-invalid @enderror" 
-                                   id="update_password_current_password" 
+                            <input type="password"
+                                   class="form-control @error('current_password', 'updatePassword') is-invalid @enderror"
+                                   id="update_password_current_password"
                                    name="current_password"
                                    placeholder="Masukkan kata sandi saat ini"
                                    autocomplete="current-password">
@@ -150,9 +150,9 @@
                             <label for="update_password_password">
                                 <i class="fas fa-lock mr-2"></i>Kata Sandi Baru
                             </label>
-                            <input type="password" 
-                                   class="form-control @error('password', 'updatePassword') is-invalid @enderror" 
-                                   id="update_password_password" 
+                            <input type="password"
+                                   class="form-control @error('password', 'updatePassword') is-invalid @enderror"
+                                   id="update_password_password"
                                    name="password"
                                    placeholder="Masukkan kata sandi baru"
                                    autocomplete="new-password">
@@ -166,9 +166,9 @@
                             <label for="update_password_password_confirmation">
                                 <i class="fas fa-lock mr-2"></i>Konfirmasi Kata Sandi
                             </label>
-                            <input type="password" 
-                                   class="form-control @error('password_confirmation', 'updatePassword') is-invalid @enderror" 
-                                   id="update_password_password_confirmation" 
+                            <input type="password"
+                                   class="form-control @error('password_confirmation', 'updatePassword') is-invalid @enderror"
+                                   id="update_password_password_confirmation"
                                    name="password_confirmation"
                                    placeholder="Konfirmasi kata sandi baru"
                                    autocomplete="new-password">
@@ -195,7 +195,7 @@
                 </div>
                 <div class="card-body">
                     <p class="text-sm text-muted">
-                        Setelah akun Anda dihapus, semua sumber daya dan data akan dihapus secara permanen. 
+                        Setelah akun Anda dihapus, semua sumber daya dan data akan dihapus secara permanen.
                         Sebelum menghapus akun, silakan unduh data atau informasi yang ingin Anda simpan.
                     </p>
                     <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteAccountModal">
@@ -228,18 +228,18 @@
                 <form method="POST" action="{{ route('profile.destroy') }}">
                     @csrf
                     @method('DELETE')
-                    
+
                     <div class="modal-body">
                         <p><strong>Apakah Anda yakin ingin menghapus akun Anda?</strong></p>
                         <p class="text-muted">
-                            Setelah akun Anda dihapus, semua sumber daya dan data akan dihapus secara permanen. 
+                            Setelah akun Anda dihapus, semua sumber daya dan data akan dihapus secara permanen.
                             Masukkan kata sandi Anda untuk mengkonfirmasi bahwa Anda ingin menghapus akun secara permanen.
                         </p>
                         <div class="form-group">
                             <label for="delete_password">Kata Sandi</label>
-                            <input type="password" 
-                                   class="form-control @error('password', 'userDeletion') is-invalid @enderror" 
-                                   id="delete_password" 
+                            <input type="password"
+                                   class="form-control @error('password', 'userDeletion') is-invalid @enderror"
+                                   id="delete_password"
                                    name="password"
                                    placeholder="Masukkan kata sandi Anda">
                             @error('password', 'userDeletion')
@@ -268,12 +268,12 @@
     nipInput.addEventListener('input', function() {
         // Remove non-numeric characters
         this.value = this.value.replace(/\D/g, '');
-        
+
         // Limit to 18 digits
         if (this.value.length > 18) {
             this.value = this.value.substr(0, 18);
         }
-        
+
         // Visual feedback for valid NIP length
         if (this.value.length === 18) {
             this.classList.remove('is-invalid');

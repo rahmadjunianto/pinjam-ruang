@@ -131,8 +131,8 @@
                                 </td>
                                 <td>
                                     <div class="btn-group" role="group">
-                                        <button type="button" 
-                                                class="btn btn-primary btn-sm dropdown-toggle" 
+                                        <button type="button"
+                                                class="btn btn-primary btn-sm dropdown-toggle"
                                                 data-toggle="dropdown">
                                             <i class="fas fa-cog mr-1"></i>Ubah Role
                                         </button>
@@ -141,7 +141,7 @@
                                                 @csrf
                                                 @method('PATCH')
                                                 <input type="hidden" name="role" value="admin">
-                                                <button type="submit" 
+                                                <button type="submit"
                                                         class="dropdown-item {{ $user->role === 'admin' ? 'active' : '' }}"
                                                         {{ $user->role === 'admin' ? 'disabled' : '' }}>
                                                     <i class="fas fa-user-shield mr-2"></i>Administrator
@@ -151,7 +151,7 @@
                                                 @csrf
                                                 @method('PATCH')
                                                 <input type="hidden" name="role" value="user">
-                                                <button type="submit" 
+                                                <button type="submit"
                                                         class="dropdown-item {{ $user->role === 'user' ? 'active' : '' }}"
                                                         {{ $user->role === 'user' ? 'disabled' : '' }}>
                                                     <i class="fas fa-user mr-2"></i>User Biasa
@@ -161,7 +161,7 @@
                                                 @csrf
                                                 @method('PATCH')
                                                 <input type="hidden" name="role" value="viewer">
-                                                <button type="submit" 
+                                                <button type="submit"
                                                         class="dropdown-item {{ $user->role === 'viewer' ? 'active' : '' }}"
                                                         {{ $user->role === 'viewer' ? 'disabled' : '' }}>
                                                     <i class="fas fa-eye mr-2"></i>Viewer
@@ -169,7 +169,7 @@
                                             </form>
                                         </div>
                                     </div>
-                                    <a href="{{ route('admin.users.show', $user) }}" 
+                                    <a href="{{ route('admin.users.show', $user) }}"
                                        class="btn btn-info btn-sm ml-1">
                                         <i class="fas fa-eye"></i>
                                     </a>

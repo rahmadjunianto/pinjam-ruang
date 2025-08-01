@@ -85,7 +85,7 @@
                             </a>
                         </div>
                         <div class="col-6">
-                            <button type="button" 
+                            <button type="button"
                                     class="btn btn-warning btn-block"
                                     onclick="resetPassword({{ $user->id }})">
                                 <i class="fas fa-key mr-1"></i>Reset Password
@@ -103,7 +103,7 @@
                     </h3>
                 </div>
                 <div class="card-body">
-                    <button type="button" 
+                    <button type="button"
                             class="btn {{ $user->is_active ? 'btn-secondary' : 'btn-success' }} btn-block mb-2"
                             onclick="toggleStatus({{ $user->id }})">
                         <i class="fas {{ $user->is_active ? 'fa-user-slash' : 'fa-user-check' }} mr-1"></i>
@@ -111,7 +111,7 @@
                     </button>
 
                     @if($totalBookings == 0)
-                        <button type="button" 
+                        <button type="button"
                                 class="btn btn-danger btn-block"
                                 onclick="deleteUser({{ $user->id }}, '{{ $user->name }}')">
                             <i class="fas fa-trash mr-1"></i>Hapus User
@@ -218,7 +218,7 @@
                                             @endswitch
                                         </td>
                                         <td>
-                                            <a href="{{ route('admin.bookings.show', $booking) }}" 
+                                            <a href="{{ route('admin.bookings.show', $booking) }}"
                                                class="btn btn-info btn-sm">
                                                 <i class="fas fa-eye"></i>
                                             </a>
@@ -305,7 +305,7 @@
         width: 100px;
         height: 100px;
     }
-    
+
     code {
         color: #e83e8c;
         background-color: #f8f9fa;

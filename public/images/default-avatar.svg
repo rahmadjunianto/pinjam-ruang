@@ -5,10 +5,10 @@
       .cls-2 { fill: #ffffff; }
     </style>
   </defs>
-  
+
   <!-- Background circle -->
   <circle class="cls-1" cx="80" cy="80" r="80"/>
-  
+
   <!-- User icon -->
   <g class="cls-2">
     <!-- Head -->
@@ -16,7 +16,7 @@
     <!-- Body -->
     <path d="M80,105 C55,105 35,120 35,140 L35,160 L125,160 L125,140 C125,120 105,105 80,105 Z"/>
   </g>
-  
+
   <!-- Kemenag Logo overlay (simplified) -->
   <g transform="translate(110, 110)">
     <circle fill="#ffd700" cx="20" cy="20" r="18"/>

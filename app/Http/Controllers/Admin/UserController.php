@@ -79,13 +79,13 @@ class UserController extends Controller
     public function show(User $user)
     {
         $user->load(['bidang', 'bookings.room']);
-        
+
         // User statistics
         $totalBookings = $user->bookings()->count();
         $approvedBookings = $user->bookings()->where('status', 'approved')->count();
         $pendingBookings = $user->bookings()->where('status', 'pending')->count();
         $rejectedBookings = $user->bookings()->where('status', 'rejected')->count();
-        
+
         // Recent bookings
         $recentBookings = $user->bookings()
                               ->with('room')
@@ -94,10 +94,10 @@ class UserController extends Controller
                               ->get();
 
         return view('admin.users.show', compact(
-            'user', 
-            'totalBookings', 
-            'approvedBookings', 
-            'pendingBookings', 
+            'user',
+            'totalBookings',
+            'approvedBookings',
+            'pendingBookings',
             'rejectedBookings',
             'recentBookings'
         ));
@@ -171,7 +171,7 @@ class UserController extends Controller
         try {
             // Generate default password (NIP)
             $defaultPassword = $user->nip;
-            
+
             $user->update([
                 'password' => Hash::make($defaultPassword)
             ]);
@@ -195,7 +195,7 @@ class UserController extends Controller
             ]);
 
             $status = $user->is_active ? 'diaktifkan' : 'dinonaktifkan';
-            
+
             return redirect()->back()
                            ->with('success', "User berhasil {$status}!");
         } catch (\Exception $e) {

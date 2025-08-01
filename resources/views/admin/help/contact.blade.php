@@ -156,7 +156,7 @@
                                 <i class="fas fa-globe text-warning mr-2"></i>
                                 <strong>Website:</strong> <a href="{{ $officeInfo['website'] }}" target="_blank">{{ $officeInfo['website'] }}</a>
                             </p>
-                            
+
                             <h6><i class="fas fa-clock text-primary mr-2"></i>Jam Operasional:</h6>
                             <ul class="list-unstyled">
                                 @foreach($officeInfo['hours'] as $day => $hours)
@@ -205,7 +205,7 @@
                         </div>
                         <div class="form-group">
                             <label for="messageContent">Pesan:</label>
-                            <textarea class="form-control" id="messageContent" rows="5" 
+                            <textarea class="form-control" id="messageContent" rows="5"
                                       placeholder="Deskripsikan masalah atau pertanyaan Anda dengan detail" required></textarea>
                         </div>
                         <div class="form-group">
@@ -303,7 +303,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="alert alert-info mt-3">
                 <h6><i class="fas fa-info-circle mr-2"></i>Catatan:</h6>
                 <ul class="mb-0">
@@ -330,25 +330,25 @@ $(document).ready(function() {
     // Contact form submission
     $('#contactForm').on('submit', function(e) {
         e.preventDefault();
-        
+
         // Validate form
         const name = $('#senderName').val();
         const nip = $('#senderNip').val();
         const phone = $('#senderPhone').val();
         const subject = $('#messageSubject').val();
         const message = $('#messageContent').val();
-        
+
         if (!name || !nip || !phone || !subject || !message) {
             Swal.fire('Error', 'Semua field wajib diisi!', 'error');
             return;
         }
-        
+
         // Validate NIP
         if (nip.length !== 18 || !/^\d+$/.test(nip)) {
             Swal.fire('Error', 'NIP harus 18 digit angka!', 'error');
             return;
         }
-        
+
         // Show loading
         Swal.fire({
             title: 'Mengirim Pesan...',
@@ -359,7 +359,7 @@ $(document).ready(function() {
                 Swal.showLoading();
             }
         });
-        
+
         // Simulate sending message
         setTimeout(() => {
             Swal.fire({
@@ -372,7 +372,7 @@ $(document).ready(function() {
             });
         }, 2000);
     });
-    
+
     // Auto-format NIP input
     $('#senderNip').on('input', function() {
         let value = $(this).val().replace(/\D/g, '');
@@ -381,18 +381,18 @@ $(document).ready(function() {
         }
         $(this).val(value);
     });
-    
+
     // Auto-format phone input
     $('#senderPhone').on('input', function() {
         let value = $(this).val().replace(/\D/g, '');
         $(this).val(value);
     });
-    
+
     // Quick contact click handlers
     $('.info-box').on('click', function() {
         const type = $(this).find('.info-box-text').text().toLowerCase();
         const number = $(this).find('.info-box-number').text();
-        
+
         if (type.includes('whatsapp')) {
             window.open(`https://wa.me/${number.replace(/\D/g, '')}`, '_blank');
         } else if (type.includes('email')) {
