@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Login & Akses Bidang</title>
+</head>
+<body>
+    <h1>Test Akses Master Bidang</h1>
+
+    <h2>1. Test Login</h2>
+    <form id="loginForm" action="http://localhost:8000/login" method="POST">
+        <input type="hidden" name="_token" id="csrfToken">
+        <input type="email" name="email" value="admin@kemenag.go.id" placeholder="Email">
+        <input type="password" name="password" value="password" placeholder="Password">
+        <button type="submit">Login</button>
+    </form>
+
+    <h2>2. Test Akses Bidang</h2>
+    <a href="http://localhost:8000/admin/bidangs" target="_blank">Buka Master Bidang</a>
+
+    <h2>3. Test Dashboard</h2>
+    <a href="http://localhost:8000/dashboard" target="_blank">Buka Dashboard</a>
+
+    <script>
+        // Get CSRF token
+        fetch('http://localhost:8000/login')
+            .then(response => response.text())
+            .then(html => {
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+                const token = doc.querySelector('meta[name="csrf-token"]')?.getAttribute('content') ||
+                              doc.querySelector('input[name="_token"]')?.value;
+                if (token) {
+                    document.getElementById('csrfToken').value = token;
+                }
+            });
+    </script>
+</body>
+</html>

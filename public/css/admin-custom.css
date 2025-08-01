@@ -1,0 +1,285 @@
+/* Custom CSS untuk Template Kementerian Agama */
+
+/* Warna Kementerian Agama */
+:root {
+    --kemenag-green: #2d5016;
+    --kemenag-light-green: #4a7c59;
+    --kemenag-gold: #d4af37;
+    --kemenag-white: #ffffff;
+}
+
+body {
+    background-color: #f4f6f9;
+    font-family: 'Source Sans Pro', sans-serif;
+}
+
+/* Header Styling */
+.main-header {
+    border-bottom: 3px solid var(--kemenag-gold);
+}
+
+.navbar-success {
+    background: linear-gradient(135deg, var(--kemenag-green) 0%, var(--kemenag-light-green) 100%);
+}
+
+/* Brand Logo */
+.brand-link {
+    background: linear-gradient(135deg, var(--kemenag-green) 0%, var(--kemenag-light-green) 100%);
+    border-bottom: 2px solid var(--kemenag-gold);
+}
+
+.brand-text {
+    color: var(--kemenag-white) !important;
+    font-weight: bold;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+}
+
+/* Sidebar Styling */
+.main-sidebar {
+    background: linear-gradient(180deg, var(--kemenag-green) 0%, #1a3d0f  100%);
+}
+
+.sidebar-dark-success .nav-sidebar > .nav-item > .nav-link {
+    color: #c2d6c2;
+    border-radius: 0.25rem;
+    margin: 0.1rem 0.5rem;
+}
+
+.sidebar-dark-success .nav-sidebar > .nav-item > .nav-link:hover {
+    background-color: rgba(255,255,255,0.1);
+    color: var(--kemenag-white);
+}
+
+.sidebar-dark-success .nav-sidebar > .nav-item > .nav-link.active {
+    background: linear-gradient(90deg, var(--kemenag-gold) 0%, #b8941f 100%);
+    color: var(--kemenag-green);
+    font-weight: bold;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+/* Sidebar Headers */
+.nav-header {
+    color: var(--kemenag-gold) !important;
+    font-weight: bold;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+    padding-bottom: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+/* Content Area */
+.content-wrapper {
+    background-color: #f8f9fa;
+}
+
+.content-header {
+    background: linear-gradient(135deg, var(--kemenag-white) 0%, #f8f9fa 100%);
+    border-bottom: 1px solid #dee2e6;
+    margin-bottom: 1rem;
+    border-radius: 0.25rem;
+}
+
+.content-header h1 {
+    color: var(--kemenag-green);
+    font-weight: bold;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+}
+
+/* Cards */
+.card {
+    border-radius: 0.5rem;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    border: 1px solid rgba(0,0,0,.125);
+    transition: all 0.3s ease;
+}
+
+.card:hover {
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px);
+}
+
+.card-header {
+    background: linear-gradient(135deg, var(--kemenag-green) 0%, var(--kemenag-light-green) 100%);
+    color: var(--kemenag-white);
+    border-bottom: 2px solid var(--kemenag-gold);
+    font-weight: bold;
+}
+
+/* Buttons */
+.btn-success {
+    background: linear-gradient(135deg, var(--kemenag-green) 0%, var(--kemenag-light-green) 100%);
+    border-color: var(--kemenag-green);
+    color: var(--kemenag-white);
+}
+
+.btn-success:hover {
+    background: linear-gradient(135deg, #1a3d0f 0%, var(--kemenag-green) 100%);
+    border-color: #1a3d0f;
+}
+
+.btn-outline-success {
+    color: var(--kemenag-green);
+    border-color: var(--kemenag-green);
+}
+
+.btn-outline-success:hover {
+    background-color: var(--kemenag-green);
+    border-color: var(--kemenag-green);
+}
+
+/* Small Boxes (Info Boxes) */
+.small-box {
+    border-radius: 0.5rem;
+    box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.small-box:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2);
+}
+
+.small-box.bg-success {
+    background: linear-gradient(135deg, var(--kemenag-green) 0%, var(--kemenag-light-green) 100%) !important;
+}
+
+/* Tables */
+.table th {
+    background-color: var(--kemenag-green);
+    color: var(--kemenag-white);
+    border: none;
+    font-weight: bold;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: rgba(45, 80, 22, 0.05);
+}
+
+/* Navigation Pills */
+.nav-pills .nav-link.active {
+    background: linear-gradient(135deg, var(--kemenag-green) 0%, var(--kemenag-light-green) 100%);
+    color: var(--kemenag-white);
+}
+
+/* Pagination */
+.page-item.active .page-link {
+    background-color: var(--kemenag-green);
+    border-color: var(--kemenag-green);
+}
+
+.page-link {
+    color: var(--kemenag-green);
+}
+
+.page-link:hover {
+    color: var(--kemenag-light-green);
+    background-color: #e9ecef;
+    border-color: #dee2e6;
+}
+
+/* Forms */
+.form-control:focus {
+    border-color: var(--kemenag-light-green);
+    box-shadow: 0 0 0 0.2rem rgba(74, 124, 89, 0.25);
+}
+
+.input-group-text {
+    background-color: var(--kemenag-green);
+    color: var(--kemenag-white);
+    border-color: var(--kemenag-green);
+}
+
+/* Breadcrumb */
+.breadcrumb {
+    background-color: transparent;
+    padding: 0.5rem 0;
+}
+
+.breadcrumb-item + .breadcrumb-item::before {
+    color: var(--kemenag-green);
+    content: ">";
+}
+
+.breadcrumb-item.active {
+    color: var(--kemenag-green);
+    font-weight: bold;
+}
+
+/* Footer */
+.main-footer {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border-top: 2px solid var(--kemenag-gold);
+    color: var(--kemenag-green);
+}
+
+/* Preloader */
+.preloader {
+    background-color: var(--kemenag-green);
+}
+
+/* Search Form */
+.sidebar-search-results .list-group-item {
+    background-color: var(--kemenag-green);
+    color: var(--kemenag-white);
+    border-color: var(--kemenag-light-green);
+}
+
+/* Custom Alert for Kemenag */
+.alert-kemenag {
+    background: linear-gradient(135deg, var(--kemenag-green) 0%, var(--kemenag-light-green) 100%);
+    border-color: var(--kemenag-green);
+    color: var(--kemenag-white);
+    border-radius: 0.5rem;
+}
+
+/* Logo Image Styling */
+.brand-image {
+    filter: brightness(1.1) contrast(1.1);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .brand-text {
+        font-size: 1.1rem;
+    }
+
+    .content-header h1 {
+        font-size: 1.5rem;
+    }
+}
+
+/* Animation for loading */
+@keyframes kemenagFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in {
+    animation: kemenagFadeIn 0.5s ease-in-out;
+}
+
+/* Custom scrollbar */
+.sidebar::-webkit-scrollbar {
+    width: 6px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+    background: rgba(255,255,255,0.1);
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+    background: var(--kemenag-gold);
+    border-radius: 3px;
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover {
+    background: #b8941f;
+}
