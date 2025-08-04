@@ -1,0 +1,77 @@
+# Production Dockerfile
+FROM php:8.2-apache
+
+# Set working directory
+WORKDIR /var/www/html
+
+# Install system dependencies for production
+RUN apt-get update && apt-get install -y \
+    git \
+    curl \
+    libpng-dev \
+    libonig-dev \
+    libxml2-dev \
+    libzip-dev \
+    libicu-dev \
+    supervisor \
+    cron \
+    && docker-php-ext-configure intl \
+    && docker-php-ext-install \
+        pdo_mysql \
+        mbstring \
+        exif \
+        pcntl \
+        bcmath \
+        gd \
+        zip \
+        intl \
+        opcache \
+    && a2enmod rewrite ssl headers \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install Composer
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
+# Configure PHP for production
+COPY docker/php/php.prod.ini /usr/local/etc/php/php.ini
+COPY docker/php/opcache.ini /usr/local/etc/php/conf.d/opcache.ini
+
+# Copy Apache configuration
+COPY docker/apache/vhost.prod.conf /etc/apache2/sites-available/000-default.conf
+COPY docker/apache/ssl.conf /etc/apache2/sites-available/ssl.conf
+
+# Copy Supervisor configuration
+COPY docker/supervisor/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+
+# Copy application files
+COPY . .
+
+# Install PHP dependencies (production)
+RUN composer install --no-dev --optimize-autoloader --no-scripts \
+    && composer dump-autoload --optimize
+
+# Set proper permissions
+RUN chown -R www-data:www-data /var/www/html \
+    && chmod -R 755 /var/www/html \
+    && chmod -R 775 /var/www/html/storage \
+    && chmod -R 775 /var/www/html/bootstrap/cache
+
+# Cache Laravel configuration
+RUN php artisan config:cache \
+    && php artisan route:cache \
+    && php artisan view:cache
+
+# Setup cron jobs
+COPY docker/cron/laravel-cron /etc/cron.d/laravel-cron
+RUN chmod 0644 /etc/cron.d/laravel-cron \
+    && crontab /etc/cron.d/laravel-cron
+
+# Create log directory
+RUN mkdir -p /var/log/supervisor
+
+# Expose ports
+EXPOSE 80 443
+
+# Start Supervisor
+CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
