@@ -14,9 +14,9 @@ return [
     |
     */
 
-    'title' => 'SIAKAD KEMENAG',
+    'title' => 'SIMARU KEMENAG',
     'title_prefix' => '',
-    'title_postfix' => ' - Kementerian Agama RI',
+    'title_postfix' => ' — Sistem Informasi Manajemen Ruang Kemenag',
 
     /*
     |--------------------------------------------------------------------------
@@ -63,12 +63,12 @@ return [
     |
     */
 
-    'logo' => '<b>SIAKAD</b> KEMENAG',
+    'logo' => '<b>SIMARU</b> KEMENAG',
     'logo_img' => 'images/logo-kemenag.png',
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,
     'logo_img_xl_class' => 'brand-image-xs',
-    'logo_img_alt' => 'Logo Kementerian Agama',
+    'logo_img_alt' => 'Logo SIMARU Kemenag',
 
     /*
     |--------------------------------------------------------------------------
@@ -87,7 +87,7 @@ return [
         'enabled' => true,
         'img' => [
             'path' => 'images/logo-kemenag.png',
-            'alt' => 'Logo Kementerian Agama',
+            'alt' => 'Logo SIMARU Kemenag',
             'class' => '',
             'width' => 80,
             'height' => 80,

@@ -1,4 +1,4 @@
-# 📋 SIAKAD KEMENAG - Sistem Peminjaman Ruang
+# 📋 SIMARU KEMENAG — Sistem Informasi Manajemen Ruang Kemenag
 
 ![Laravel](https://img.shields.io/badge/Laravel-12.x-red.svg)
 ![PHP](https://img.shields.io/badge/PHP-8.2+-blue.svg)
@@ -6,7 +6,7 @@
 ![MySQL](https://img.shields.io/badge/MySQL-8.0-orange.svg)
 ![Docker](https://img.shields.io/badge/Docker-Ready-blue.svg)
 
-Sistem Informasi Akademik Kementerian Agama untuk manajemen peminjaman ruangan dengan antarmuka AdminLTE yang modern dan responsif.
+Sistem Informasi Manajemen Ruang Kementerian Agama untuk manajemen peminjaman ruangan dengan antarmuka AdminLTE yang modern dan responsif.
 
 ## 📑 Daftar Isi
 

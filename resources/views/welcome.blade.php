@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Sistem Peminjaman Ruang - Kementerian Agama</title>
+        <title>SIMARU KEMENAG — Sistem Informasi Manajemen Ruang Kemenag</title>
 
         <!-- Bootstrap CSS -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -121,8 +121,8 @@
                     <div class="text-center text-white w-100 p-5">
                         <div class="mb-4">
                             <i class="fas fa-mosque fa-4x text-gold mb-3"></i>
-                            <h1 class="h2 mb-3">Sistem Peminjaman Ruang</h1>
-                            <h4 class="text-gold">Kementerian Agama RI</h4>
+                            <h1 class="h2 mb-3">SIMARU KEMENAG</h1>
+                            <h4 class="text-gold">Sistem Informasi Manajemen Ruang Kemenag</h4>
                         </div>
 
                         <div class="mt-5">
@@ -130,7 +130,7 @@
                                 <div class="card-body">
                                     <h5 class="card-title text-gold">
                                         <i class="fas fa-calendar-alt me-2"></i>
-                                        Kalender Peminjaman
+                                        Kalender Manajemen Ruang
                                     </h5>
                                     <div id="calendar" class="mt-3"></div>
                                 </div>
@@ -145,7 +145,7 @@
                         <div class="text-center mb-5">
                             <i class="fas fa-door-open fa-3x text-success mb-3"></i>
                             <h2 class="mb-3">Selamat Datang</h2>
-                            <p class="text-muted">Silakan login untuk mengakses sistem peminjaman ruang</p>
+                            <p class="text-muted">Silakan login untuk mengakses sistem manajemen ruang</p>
                         </div>
 
                         @if (Route::has('login'))
