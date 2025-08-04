@@ -29,6 +29,10 @@ class UserFactory extends Factory
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),
+            'nip' => fake()->numerify('##########'),
+            'bidang_id' => 1, // Default bidang
+            'is_active' => true,
+            'role' => 'user',
         ];
     }
 

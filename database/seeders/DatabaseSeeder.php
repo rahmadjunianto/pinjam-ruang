@@ -15,6 +15,11 @@ class DatabaseSeeder extends Seeder
     {
         $this->command->info('🌱 Mulai seeding database...');
 
+        // Jalankan seeder dalam urutan yang benar - bidang dulu
+        $this->call([
+            BidangSeeder::class,
+        ]);
+
         // Buat admin user
         User::factory()->create([
             'name' => 'Admin Kemenag',
@@ -23,6 +28,7 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('password'),
             'role' => 'admin',
             'is_active' => true,
+            'bidang_id' => 1,
         ]);
 
         // Buat user biasa
@@ -33,6 +39,7 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('password'),
             'role' => 'user',
             'is_active' => true,
+            'bidang_id' => 1,
         ]);
 
         // Buat viewer
@@ -43,6 +50,7 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('password'),
             'role' => 'viewer',
             'is_active' => true,
+            'bidang_id' => 1,
         ]);
 
         // Buat beberapa user tambahan
@@ -50,9 +58,8 @@ class DatabaseSeeder extends Seeder
 
         $this->command->info('👥 Users berhasil dibuat');
 
-        // Jalankan seeder lainnya dalam urutan yang benar
+        // Jalankan seeder lainnya
         $this->call([
-            BidangSeeder::class,
             RoomSeeder::class,
             BookingSeeder::class,
         ]);

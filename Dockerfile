@@ -19,7 +19,10 @@ RUN apt-get update && apt-get install -y \
     npm \
     && docker-php-ext-configure intl \
     && docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd zip intl \
+    && pecl install redis \
+    && docker-php-ext-enable redis \
     && a2enmod rewrite \
+    && a2enmod headers \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
