@@ -24,7 +24,7 @@ class DatabaseSeeder extends Seeder
         User::factory()->create([
             'name' => 'Admin Kemenag',
             'email' => 'admin@kemenag.go.id',
-            'nip' => '198501012006011001',
+            'nip' => '199506022025051007s',
             'password' => bcrypt('password'),
             'role' => 'admin',
             'is_active' => true,
