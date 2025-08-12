@@ -111,9 +111,52 @@
                 font-style: italic !important;
                 color: rgba(255, 255, 255, 0.8) !important;
             }
+
+            /* Mobile responsive styles */
+            @media (max-width: 768px) {
+                .col-md-6 {
+                    min-height: 100vh;
+                }
+                
+                #calendar {
+                    height: 300px;
+                }
+                
+                .p-5 {
+                    padding: 2rem !important;
+                }
+                
+                .h2 {
+                    font-size: 1.5rem;
+                }
+            }
+
+            @media (max-width: 576px) {
+                .p-5 {
+                    padding: 1.5rem !important;
+                }
+                
+                #calendar {
+                    height: 250px;
+                }
+                
+                .fc-toolbar {
+                    flex-direction: column;
+                    gap: 10px;
+                }
+                
+                .fc-toolbar-title {
+                    font-size: 0.9rem !important;
+                }
+                
+                .fc-button {
+                    font-size: 10px !important;
+                    padding: 1px 6px !important;
+                }
+            }
         </style>
     </head>
-    <body class="bg-light overflow-hidden">
+    <body class="bg-light">
         <div class="container-fluid p-0">
             <div class="row min-vh-100 g-0">
                 <!-- Sidebar Info -->

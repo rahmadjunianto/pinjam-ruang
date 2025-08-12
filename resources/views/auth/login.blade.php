@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Login - Sistem Peminjaman Ruang Kemenag</title>
+    <title>Login - SIMARU KEMENAG</title>
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -15,9 +15,7 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #1b5e20 0%, #2e7d32 50%, #4caf50 100%);
             min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            padding: 20px 0;
         }
 
         .login-container {
@@ -27,7 +25,7 @@
             overflow: hidden;
             max-width: 900px;
             width: 100%;
-            margin: 20px;
+            margin: 20px auto;
             backdrop-filter: blur(10px);
         }
 
@@ -241,12 +239,23 @@
         }
 
         @media (max-width: 768px) {
+            body {
+                padding: 10px 0;
+                min-height: 100vh;
+                overflow-x: hidden;
+            }
+
             .login-container {
                 margin: 10px;
                 border-radius: 15px;
+                min-height: auto;
             }
 
             .login-form {
+                padding: 1.5rem;
+            }
+
+            .login-header {
                 padding: 1.5rem;
             }
 
@@ -256,6 +265,32 @@
 
             .mosque-icon {
                 font-size: 2.5rem;
+            }
+
+            .back-home {
+                position: fixed;
+                top: 10px;
+                left: 10px;
+                z-index: 1000;
+                background: rgba(0, 0, 0, 0.5);
+                padding: 8px 12px;
+                border-radius: 20px;
+                font-size: 0.8rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .login-form {
+                padding: 1rem;
+            }
+
+            .form-control {
+                padding: 10px 14px;
+                font-size: 16px; /* Prevents zoom on iOS */
+            }
+
+            .input-icon .form-control {
+                padding-left: 40px;
             }
         }
     </style>
@@ -270,8 +305,8 @@
             <div class="mosque-icon">
                 <i class="fas fa-mosque"></i>
             </div>
-            <h1>Sistem Peminjaman Ruang</h1>
-            <p class="subtitle">Kementerian Agama Republik Indonesia</p>
+            <h1>SIMARU KEMENAG</h1>
+            <p class="subtitle">Sistem Informasi Manajemen Ruang Kemenag</p>
         </div>
 
         <div class="login-form">
