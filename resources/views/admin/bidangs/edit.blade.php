@@ -1,19 +1,19 @@
 @extends('adminlte::page')
 
-@section('title', 'Edit Bidang - SIMARU KEMENAG')
+@section('title', 'Edit Seksi - SIMARU KEMENAG')
 
 @section('content_header')
     <div class="row">
         <div class="col-sm-6">
             <h1 class="m-0">
                 <i class="fas fa-edit text-warning mr-2"></i>
-                Edit Bidang
+                Edit Seksi
             </h1>
         </div>
         <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
                 <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('admin.bidangs.index') }}">Manajemen Bidang</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.bidangs.index') }}">Manajemen Seksi</a></li>
                 <li class="breadcrumb-item active">Edit</li>
             </ol>
         </div>
@@ -27,7 +27,7 @@
                 <div class="card-header">
                     <h3 class="card-title">
                         <i class="fas fa-edit mr-2"></i>
-                        Form Edit Bidang: {{ $bidang->nama }}
+                        Form Edit Seksi: {{ $bidang->nama }}
                     </h3>
                     <div class="card-tools">
                         <a href="{{ route('admin.bidangs.index') }}" class="btn btn-tool">
@@ -55,7 +55,7 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="kode">Kode Bidang <span class="text-danger">*</span></label>
+                                    <label for="kode">Kode Seksi <span class="text-danger">*</span></label>
                                     <input type="text"
                                            class="form-control @error('kode') is-invalid @enderror"
                                            id="kode"
@@ -67,20 +67,20 @@
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                     <small class="form-text text-muted">
-                                        Kode unik untuk identifikasi bidang (maksimal 10 karakter).
+                                        Kode unik untuk identifikasi seksi (maksimal 10 karakter).
                                     </small>
                                 </div>
                             </div>
 
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="nama">Nama Bidang <span class="text-danger">*</span></label>
+                                                                            <label for="name" class="form-label">Nama Seksi</label>
                                     <input type="text"
                                            class="form-control @error('nama') is-invalid @enderror"
                                            id="nama"
                                            name="nama"
                                            value="{{ old('nama', $bidang->nama) }}"
-                                           placeholder="Nama lengkap bidang"
+                                                                                   placeholder="Masukkan nama seksi"
                                            required>
                                     @error('nama')
                                         <div class="invalid-feedback">{{ $message }}</div>
@@ -90,24 +90,24 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="deskripsi">Deskripsi Bidang</label>
+                            <label for="deskripsi">Deskripsi Seksi</label>
                             <textarea class="form-control @error('deskripsi') is-invalid @enderror"
                                       id="deskripsi"
                                       name="deskripsi"
                                       rows="4"
-                                      placeholder="Deskripsi tugas dan fungsi bidang...">{{ old('deskripsi', $bidang->deskripsi) }}</textarea>
+                                      placeholder="Deskripsi tugas dan fungsi seksi...">{{ old('deskripsi', $bidang->deskripsi) }}</textarea>
                             @error('deskripsi')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                             <small class="form-text text-muted">
-                                Opsional. Deskripsi singkat tentang tugas dan fungsi bidang ini.
+                                Opsional. Deskripsi singkat tentang tugas dan fungsi seksi ini.
                             </small>
                         </div>
 
                         <div class="alert alert-info">
                             <i class="fas fa-info-circle mr-2"></i>
                             <strong>Informasi:</strong>
-                            Perubahan data bidang akan mempengaruhi semua user dan booking yang terkait dengan bidang ini.
+                            Perubahan data seksi akan mempengaruhi semua user dan booking yang terkait dengan seksi ini.
                         </div>
                     </div>
 
@@ -158,7 +158,7 @@
 
             // Konfirmasi sebelum submit
             $('form').on('submit', function(e) {
-                if (!confirm('Yakin ingin menyimpan perubahan data bidang ini?')) {
+                if (!confirm('Yakin ingin menyimpan perubahan data seksi ini?')) {
                     e.preventDefault();
                 }
             });

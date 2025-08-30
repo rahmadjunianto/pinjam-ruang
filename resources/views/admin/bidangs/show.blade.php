@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Detail Bidang')
+@section('title', 'Detail Seksi')
 
 @sect                        <tr>
                             <td><strong>Dibuat:</strong></td>
@@ -11,7 +11,7 @@
                             <td>{{ $bidang->updated_at ? $bidang->updated_at->format('d/m/Y H:i') : 'N/A' }}</td>
                         </tr>tent_header')
     <div class="d-flex justify-content-between align-items-center">
-        <h1>Detail Bidang: {{ $bidang->nama }}</h1>
+        <h1>Detail Seksi: {{ $bidang->nama }}</h1>
         <div class="btn-group">
             <a href="{{ route('admin.bidangs.edit', $bidang) }}" class="btn btn-warning">
                 <i class="fas fa-edit"></i> Edit
@@ -28,18 +28,18 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">Informasi Bidang</h3>
+                    <h3 class="card-title">Informasi Seksi</h3>
                 </div>
                 <div class="card-body">
                     <table class="table table-borderless">
                         <tr>
-                            <td width="150"><strong>Kode Bidang:</strong></td>
+                            <td width="150"><strong>Kode Seksi:</strong></td>
                             <td>
                                 <span class="badge badge-secondary">{{ $bidang->kode }}</span>
                             </td>
                         </tr>
                         <tr>
-                            <td><strong>Nama Bidang:</strong></td>
+                            <td><strong>Nama Seksi:</strong></td>
                             <td>{{ $bidang->nama }}</td>
                         </tr>
                         <tr>
@@ -47,7 +47,7 @@
                             <td>{{ $bidang->deskripsi ?: '-' }}</td>
                         </tr>
                         <tr>
-                            <td><strong>Kepala Bidang:</strong></td>
+                            <td><strong>Kepala Seksi:</strong></td>
                             <td>{{ $bidang->kepala_bidang ?: '-' }}</td>
                         </tr>
                         <tr>

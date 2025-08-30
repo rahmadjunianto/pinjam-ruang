@@ -1,19 +1,19 @@
 @extends('adminlte::page')
 
-@section('title', 'Manajemen Bidang')
+@section('title', 'Manajemen Seksi')
 
 @section('content_header')
     <div class="row">
         <div class="col-sm-6">
             <h1 class="m-0">
                 <i class="fas fa-building text-success mr-2"></i>
-                Manajemen Bidang
+                Manajemen Seksi
             </h1>
         </div>
         <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
                 <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-                <li class="breadcrumb-item active">Master Bidang</li>
+                <li class="breadcrumb-item active">Master Seksi</li>
             </ol>
         </div>
     </div>
@@ -24,11 +24,11 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">Daftar Bidang</h3>
+                    <h3 class="card-title">Daftar Seksi</h3>
                     <div class="card-tools">
                         <div class="input-group input-group-sm" style="width: 250px;">
                             <form method="GET" class="d-flex">
-                                <input type="text" name="search" class="form-control float-right" placeholder="Cari bidang..." value="{{ request('search') }}">
+                                <input type="text" name="search" class="form-control float-right" placeholder="Cari seksi..." value="{{ request('search') }}">
                                 <div class="input-group-append">
                                     <button type="submit" class="btn btn-default">
                                         <i class="fas fa-search"></i>
@@ -39,7 +39,7 @@
                     </div>
                     <div class="card-tools" style="margin-right: 260px;">
                         <a href="{{ route('admin.bidangs.create') }}" class="btn btn-primary btn-sm">
-                            <i class="fas fa-plus"></i> Tambah Bidang
+                            <i class="fas fa-plus"></i> Tambah Seksi
                         </a>
                     </div>
                 </div>
@@ -68,7 +68,7 @@
                                 <thead>
                                     <tr>
                                         <th style="width: 10px">#</th>
-                                        <th>Nama Bidang</th>
+                                        <th>Nama Seksi</th>
                                         <th>Deskripsi</th>
                                         <th style="width: 120px">Aksi</th>
                                     </tr>
@@ -84,7 +84,7 @@
                                                 <a href="{{ route('admin.bidangs.edit', $bidang) }}" class="btn btn-warning btn-sm">
                                                     <i class="fas fa-edit"></i>
                                                 </a>
-                                                <form action="{{ route('admin.bidangs.destroy', $bidang) }}" method="POST" class="d-inline" onsubmit="return confirm('Yakin ingin menghapus bidang ini?')">
+                                                <form action="{{ route('admin.bidangs.destroy', $bidang) }}" method="POST" class="d-inline" onsubmit="return confirm('Yakin ingin menghapus seksi ini?')">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="btn btn-danger btn-sm">
@@ -106,8 +106,8 @@
                     @else
                         <div class="text-center py-4">
                             <i class="fas fa-building fa-3x text-muted mb-3"></i>
-                            <h5 class="text-muted">Belum ada bidang</h5>
-                            <p class="text-muted">Silakan tambah bidang baru untuk mulai mengelola data bidang.</p>
+                            <h5 class="text-muted">Belum ada seksi</h5>
+                            <p class="text-muted">Silakan tambah seksi baru untuk mulai mengelola data seksi.</p>
                         </div>
                     @endif
                 </div>

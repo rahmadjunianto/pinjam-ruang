@@ -39,7 +39,7 @@ class BidangController extends Controller
         Bidang::create($validated);
 
         return redirect()->route('admin.bidangs.index')
-            ->with('success', 'Bidang berhasil ditambahkan.');
+            ->with('success', 'Seksi berhasil ditambahkan.');
     }
 
     /**
@@ -72,7 +72,7 @@ class BidangController extends Controller
         $bidang->update($validated);
 
         return redirect()->route('admin.bidangs.index')
-            ->with('success', 'Bidang berhasil diperbarui.');
+            ->with('success', 'Seksi berhasil diperbarui.');
     }
 
     /**
@@ -83,6 +83,6 @@ class BidangController extends Controller
         $bidang->delete();
 
         return redirect()->route('admin.bidangs.index')
-            ->with('success', 'Bidang berhasil dihapus.');
+            ->with('success', 'Seksi berhasil dihapus.');
     }
 }
