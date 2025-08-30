@@ -373,7 +373,7 @@ $(document).ready(function() {
             plugins: {
                 title: {
                     display: true,
-                    text: 'Top 5 Bidang Teraktif'
+                    text: 'Top 5 Seksi Teraktif'
                 },
                 legend: {
                     position: 'bottom'
