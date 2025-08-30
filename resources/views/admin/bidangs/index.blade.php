@@ -70,8 +70,6 @@
                                         <th style="width: 10px">#</th>
                                         <th>Nama Bidang</th>
                                         <th>Deskripsi</th>
-                                        <th>Total Booking</th>
-                                        <th>Status</th>
                                         <th style="width: 120px">Aksi</th>
                                     </tr>
                                 </thead>
@@ -81,16 +79,7 @@
                                             <td>{{ $bidangs->firstItem() + $index }}</td>
                                             <td><strong>{{ $bidang->nama }}</strong></td>
                                             <td>{{ $bidang->deskripsi ? Str::limit($bidang->deskripsi, 50) : '-' }}</td>
-                                            <td>
-                                                <span class="badge badge-info">{{ $bidang->bookings_count ?? 0 }}</span>
-                                            </td>
-                                            <td>
-                                                @if($bidang->is_active ?? true)
-                                                    <span class="badge badge-success">Aktif</span>
-                                                @else
-                                                    <span class="badge badge-secondary">Nonaktif</span>
-                                                @endif
-                                            </td>
+
                                             <td>
                                                 <a href="{{ route('admin.bidangs.edit', $bidang) }}" class="btn btn-warning btn-sm">
                                                     <i class="fas fa-edit"></i>

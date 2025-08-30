@@ -373,6 +373,13 @@ return [
                     'role' => ['admin'], // Only admin
                 ],
                 [
+                    'text' => 'Manajemen Bidang',
+                    'url' => 'admin/bidangs',
+                    'icon' => 'fas fa-sitemap',
+                    'active' => ['admin/bidangs', 'admin/bidangs/*'],
+                    'role' => ['admin'], // Only admin
+                ],
+                [
                     'text' => 'Hak Akses',
                     'url' => 'admin/permissions',
                     'icon' => 'fas fa-key',

@@ -32,6 +32,14 @@ class Bidang extends Model
     }
 
     /**
+     * Relationship dengan users
+     */
+    public function users()
+    {
+        return $this->hasMany(User::class);
+    }
+
+    /**
      * Relationship dengan bookings
      */
     public function bookings()
