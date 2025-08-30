@@ -190,30 +190,40 @@
                             });
                     },
                     eventDidMount: function(info) {
-                        // Add room name to event display
-                        if (info.event.extendedProps.room) {
-                            const roomEl = document.createElement('div');
-                            roomEl.className = 'fc-event-room';
-                            roomEl.textContent = info.event.extendedProps.room;
-                            info.el.querySelector('.fc-event-title-container').appendChild(roomEl);
+                        try {
+                            // Add room name to event display
+                            if (info.event.extendedProps.room) {
+                                const titleContainer = info.el.querySelector('.fc-event-title-container') || info.el.querySelector('.fc-event-main') || info.el;
+                                if (titleContainer) {
+                                    const roomEl = document.createElement('div');
+                                    roomEl.className = 'fc-event-room';
+                                    roomEl.textContent = info.event.extendedProps.room;
+                                    titleContainer.appendChild(roomEl);
+                                }
+                            }
+
+                            // Add seksi to event display
+                            if (info.event.extendedProps.bidang) {
+                                const titleContainer = info.el.querySelector('.fc-event-title-container') || info.el.querySelector('.fc-event-main') || info.el;
+                                if (titleContainer) {
+                                    const bidangEl = document.createElement('div');
+                                    bidangEl.className = 'fc-event-bidang';
+                                    bidangEl.textContent = info.event.extendedProps.bidang;
+                                    titleContainer.appendChild(bidangEl);
+                                }
+                            }
+
+                            // Add tooltip on hover
+                            info.el.addEventListener('mouseenter', function(e) {
+                                showTooltip(e, info.event);
+                            });
+
+                            info.el.addEventListener('mouseleave', function() {
+                                hideTooltip();
+                            });
+                        } catch (error) {
+                            console.warn('Error in eventDidMount:', error);
                         }
-
-                        // Add seksi to event display
-                        if (info.event.extendedProps.bidang) {
-                            const bidangEl = document.createElement('div');
-                            bidangEl.className = 'fc-event-bidang';
-                            bidangEl.textContent = info.event.extendedProps.bidang;
-                            info.el.querySelector('.fc-event-title-container').appendChild(bidangEl);
-                        }
-
-                        // Add tooltip on hover
-                        info.el.addEventListener('mouseenter', function(e) {
-                            showTooltip(e, info.event);
-                        });
-
-                        info.el.addEventListener('mouseleave', function() {
-                            hideTooltip();
-                        });
                     },
                     eventClick: function(info) {
                         showEventModal(info.event);
