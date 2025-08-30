@@ -89,9 +89,9 @@
                     </div>
                     <div class="col-md-2">
                         <div class="form-group">
-                            <label for="bidang_id">Bidang:</label>
+                            <label for="bidang_id">Seksi:</label>
                             <select class="form-control" id="bidang_id" name="bidang_id">
-                                <option value="">Semua Bidang</option>
+                                <option value="">Semua Seksi</option>
                                 @foreach($bidangs as $bidang)
                                     <option value="{{ $bidang->id }}" {{ request('bidang_id') == $bidang->id ? 'selected' : '' }}>
                                         {{ $bidang->nama }}
@@ -238,7 +238,7 @@
                                 <th>Kode</th>
                                 <th>Judul Kegiatan</th>
                                 <th>Ruangan</th>
-                                <th>Bidang</th>
+                                <th>Seksi</th>
                                 <th>Tanggal</th>
                                 <th>Waktu</th>
                                 <th>Pemohon</th>

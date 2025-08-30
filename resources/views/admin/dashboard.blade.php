@@ -203,11 +203,11 @@
             </div>
         </div>
 
-        <!-- Top Bidangs -->
+        <!-- Top Seksi -->
         <div class="col-md-6">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">Bidang Yang Sering Meminjam</h3>
+                    <h3 class="card-title">Seksi Yang Sering Meminjam</h3>
                     <div class="card-tools">
                         <span class="badge badge-success">{{ DateTime::createFromFormat('!m', $month)->format('F') }} {{ $year }}</span>
                     </div>
@@ -219,7 +219,7 @@
                                 <thead>
                                     <tr>
                                         <th>Rank</th>
-                                        <th>Nama Bidang</th>
+                                        <th>Nama Seksi</th>
                                         <th>Jumlah Peminjaman</th>
                                         <th>Persentase</th>
                                     </tr>
@@ -263,7 +263,7 @@
                     @else
                         <div class="empty-state">
                             <i class="fas fa-building fa-3x"></i>
-                            <h5 class="mt-3 text-muted">Tidak ada data peminjaman bidang</h5>
+                            <h5 class="mt-3 text-muted">Tidak ada data peminjaman seksi</h5>
                             <p class="text-muted">untuk periode {{ DateTime::createFromFormat('!m', $month)->format('F') }} {{ $year }}</p>
                         </div>
                     @endif
@@ -285,7 +285,7 @@
                         <div class="col-md-6">
                             <canvas id="roomChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
                         </div>
-                        <!-- Bidang Chart -->
+                        <!-- Seksi Chart -->
                         <div class="col-md-6">
                             <canvas id="bidangChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
                         </div>
@@ -349,7 +349,7 @@ $(document).ready(function() {
         }
     });
 
-    // Bidang Chart
+    // Seksi Chart
     const bidangCtx = document.getElementById('bidangChart').getContext('2d');
     const bidangData = @json($topBidangs->take(5));
 

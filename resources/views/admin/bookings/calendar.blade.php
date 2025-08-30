@@ -35,9 +35,9 @@
                     </select>
                 </div>
                 <div class="col-md-3">
-                    <label for="bidang_filter"><i class="fas fa-building mr-1"></i>Filter Bidang:</label>
+                    <label for="bidang_filter"><i class="fas fa-building mr-1"></i>Filter Seksi:</label>
                     <select id="bidang_filter" class="form-control">
-                        <option value="">Semua Bidang</option>
+                        <option value="">Semua Seksi</option>
                         @foreach($bidangs as $bidang)
                             <option value="{{ $bidang->id }}">{{ $bidang->nama }}</option>
                         @endforeach
@@ -198,7 +198,7 @@
                             info.el.querySelector('.fc-event-title-container').appendChild(roomEl);
                         }
 
-                        // Add bidang to event display
+                        // Add seksi to event display
                         if (info.event.extendedProps.bidang) {
                             const bidangEl = document.createElement('div');
                             bidangEl.className = 'fc-event-bidang';
@@ -245,7 +245,7 @@
                 const props = event.extendedProps;
                 let tooltipContent = '<strong>' + event.title + '</strong><br>';
                 tooltipContent += 'Ruang: ' + (props.room || 'N/A') + '<br>';
-                tooltipContent += 'Bidang: ' + (props.bidang || 'N/A') + '<br>';
+                tooltipContent += 'Seksi: ' + (props.bidang || 'N/A') + '<br>';
                 tooltipContent += 'PIC: ' + (props.pic || 'N/A') + '<br>';
                 tooltipContent += 'Status: ' + (props.status || 'N/A') + '<br>';
                 tooltipContent += 'Waktu: ' + (props.time || 'N/A');
