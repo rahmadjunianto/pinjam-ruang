@@ -471,6 +471,9 @@ class BookingController extends Controller
 
         // Room usage statistics
         $roomStats = $bookings->where('status', 'approved')
+            ->filter(function($booking) {
+                return $booking->room && $booking->room->name;
+            })
             ->groupBy('room.name')
             ->map(function ($group) {
                 return $group->count();
